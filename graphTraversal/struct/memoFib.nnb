@@ -1,0 +1,182 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "([00:03:30](https://www.youtube.com/watch?v=oBt53YbR9Kk&t=210s)) fib memoization\n\n\nWrite a function `fib(n)` that takes in a number as an argument. The function should return the n-th number of the fibonacci sequence.\n\nThe 1st and 2nd number of the sequence is 1. \n\n<img alt=\"figFib1\" src=\"fibFig1.png\" width=\"600\" />\n\n\nwe can take the sum of the previous 2 numbers\n\nclassic implementation, O(2^n) time complexity\n\n\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const classicFib = (n) => {\n    if (n <= 2) return 1\n    return classicFib(n-1) + classicFib(n - 2);\n    }\n    \n    console.log(classicFib(6)) // 8\n    console.log(classicFib(7)) // 13\n    console.log(classicFib(8)) // 21\n    // console.log(fib(50)) // this will run for a long time, too big. // This simple implementation can be optimized\n    "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "8",
+                                "13",
+                                "21",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"figFib2\" src=\"./figFib2.png\" width='400'/>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const foo = (n) => {\n    if (n <= 1) return;\n    foo(n - 1)\n    }\n    \n    // returns undefined, arbitrary just to visualize\n    /*\n    5 // 1st call\n    |\n    4 // 2nd calls\n    |\n    3 // 3rd calls\n    |\n    2 // 4th calls\n    |\n    1 // 5th call base case \n    \n    1 recursive function call so O(n) time\n    O(n) function calls, O(n) time\n    O(n) space, bc of stack space of recursive call\n    */"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"figFib3\" src=\"./figFib3.png\" width='400'/>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const bar = (n) => {\n    if (n <= 1) return;\n    foo(n - 2)\n    \n    /**\n    6 // 1st call\n    |\n    4 // 2nd calls\n    |\n    2 // 3rd calls\n    |\n    0 // 4th calls\n    \n    1 recursive function call O(n/2) so O(n) time complexity\n    O(n) space\n    */\n    }"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"figFib4\" src=\"./figFib4.png\" width='400'/>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const dib = (n) => {\n    if (n <= 1) return\n    dib(n-1)\n    dib(n-1)\n    }\n    \n    /**\n    2 recursive function calls so time complexity is O(2^n)\n    */"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "number of levels = height of tree\n\n<img alt=\"figFib5\" src=\"./figFib5.png\" width='400'/>\n\n1 node at top level =>  2^1 = 1\n2 at next level => 2^1 = 1\n4 at next level => 2^2 = 4\n8 at next level => 2^3 = 8\n16 at next level => 2^4 = 16\n\npattern is 2^n, or 2^height of tree\n\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const lib = (n) => {\n    if (n <= 1) return;\n    lib(n - 2);\n    lib(n - 2);\n    }\n    \n    /*\n    height is n/2 so time complexity is O(2^n/2) which simplifies to O(2^n)\n    space is number of calls which is n/2 so O(n/2) which simplifies to O(n)\n    */"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "\n<img alt=\"figFib6\" src=\"./figFib6.png\" width='400'/>\n\n<img alt=\"figFib8\" src=\"./figFib8.png\" width='400'/>\n\n<img alt=\"figFib9\" src=\"./figFib9.png\" width='400'/>\n\nclassic fibonacci implementation doesn't have a desirable time complexity\n\n<img alt=\"figFib10\" src=\"./figFib10.png\" width='400'/>\n\n<img alt=\"figFib11\" src=\"./figFib11.png\" width='400'/>\n\nduplicate work so DYNAMIC PROGRAMMING problem\n\nThere are two key attributes that a problem must have in order for dynamic programming to be applicable: [optimal substructure](https://en.wikipedia.org/wiki/Optimal_substructure \"Optimal substructure\") and [overlapping sub-problems](https://en.wikipedia.org/wiki/Overlapping_subproblem \"Overlapping subproblem\"). \n\nmemoization: storing answers to calculations and checking for duplicate calls and looking for past answers\n\n[in operator - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in)\nif (n in memo)\nsame as \"if key in object\" and returns boolean\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "let obj = {\n    1: 'hello'\n    } // 1 in memo returns true"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "1 in obj"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mtrue\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// js object, keys will be arg to fn, value will be the return // value\nconst memoFib = (n, memo = {}) => {\n    if (n in memo) return memo[n]\n    if (n <= 2) return 1\n    memo[n] =  memoFib(n-1, memo) + memoFib(n - 2, memo);\n    return memo[n]\n    }\n    \n    console.log(memoFib(6)) // 8\n    console.log(memoFib(7)) // 13\n    console.log(memoFib(8)) // 21\n    console.log(memoFib(50)) // runs almost instantly\n    "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "8",
+                                "13",
+                                "21",
+                                "12586269025",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"figFib12\" src=\"./figFib12.png\" width='400'/>\n\nthere are n pairs so time complexity is O(2n) which simplifies to a memoized time complexity of O(n)\nspace complexity O(n)\n\n<img alt=\"figFib13\" src=\"./figFib13.png\" width='400'/>\n<br/>\n<img alt=\"figFib14\" src=\"./figFib14.png\" width='400'/>\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Grid Traveler\n<img alt=\"figFib14\" src=\"./figFib14.png\" width='400'/>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const gridTraveler = (m,n) => {\nconsole.log(m,n)\n}\n\ngridTraveler(2,3) // 3"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2 3",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"figFib15\" src=\"./figFib15.png\" width='400'/>\n\nThink about this by choosing the smallest possible input like\ngridTraveler(1,1) // 1\n\nif one of the dimensions is 0, there's no way to travel bc grid is empty\ngridTraveler(0,1) // 0\ngridTraveler(1,0) // 0\ngridTraveler(0,0) // 0\n<img alt=\"figFib16\" src=\"./figFib16.png\" width='400'/>\n\n\n#### time complexity is exponential at O(2^n + m), space complexity is linear at O(n + m)\n\nIt's m + n because each node has 2 input values, 2 arguments\n\n<img alt=\"figFib17\" src=\"figFib17.png\" width=\"400\" />"
+            ],
+            "outputs": []
+        }
+    ]
+}

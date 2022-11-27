@@ -1,0 +1,26 @@
+{
+  "name": "udemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "a.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinklikeadesigner/Udemy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinklikeadesigner/Udemy/issues"
+  },
+  "homepage": "https://github.com/thinklikeadesigner/Udemy#readme",
+  "dependencies": {
+    "jest": "^29.3.1",
+    "treeify": "^1.1.0"
+  }
+}
