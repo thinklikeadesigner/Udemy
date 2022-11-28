@@ -66,7 +66,7 @@
         {
             "language": "markdown",
             "source": [
-                "### caveats\n- make sure to include allll return values that arent base case return values in memo.\n- if argument doesn't change, like the numbers array in canSum, you don't need to include it in the key\n\n\n<img alt=\"canSumFig3\" src=\"canSumFig3.png\" width=\"600\" />\n\n\nm space which is the depth of the tree, which is the same for brute force and memoized versions"
+                "### caveats\n- make sure to include allll return values that arent base case return values in memo.\n- if argument doesn't change, like the numbers array in canSum, you don't need to include it in the key\n- to memoize, make sure you look at a big enough sample problem so you can see the duplicate problems\n\n\n<img alt=\"canSumFig3\" src=\"canSumFig3.png\" width=\"600\" />\n\n\nm space which is the depth of the tree, which is the same for brute force and memoized versions"
             ],
             "outputs": []
         }

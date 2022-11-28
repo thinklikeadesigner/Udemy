@@ -1,0 +1,81 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoHowSumFig1.png\" width=\"600\"/>\n\n`exactly` the target sum, so with decimals, shouldn't round the number\n\n```js\nhowSum(7, [5,3,4,7]) -> [7]\nhowSum(7, [5,3,4,7]) -> [3,4]\nhowSum(8, [2,3,5]) -> [3,5]\nhowSum(8, [2,3,5]) -> [2,2,2,2]\nhowSum(7, [2,4]) -> null // not possible\nhowSum(0, [1,2,3]) -> [] // an empty combination sums to 0, if you sum up all elements in an empty array it would sum to 0\n```\n\nYou can return any single combo, so for 7 you can return [7] and if you return [3,4] that would also work, depending on which one you find first\n<img src=\"memoHowSumFig2.png\" width=\"600\"/>\n\nbase case where the leaf is zero, these are trivially solved bc their combination would return an empty array.\nyou want to add the number that brought you to the empty array, so for the -4 -> 0, you want to add 4 to the []\n\n## Brute Force howSum()"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const howSum = (target, numbers, values=[]) => {\n  if (target === 0) return [];\n  if (target < 0) return null;\n\n  for (let num of numbers) {\n    const remainder = target - num;\n    const remainderResult = howSum(remainder, numbers, values);\n    if (remainderResult !== null) {\n      return [...remainderResult, num]\n    }\n  }\n  return null;\n};\n\nconsole.log(howSum(7, [2, 3])); // => [3,2,2]\n// console.log(howSum(7, [5, 3, 4, 7])); // => [4,3]\nconsole.log(howSum(7, [2, 4])); // => [2,4]\nconsole.log(howSum(8, [2, 3, 5])); // => [2,2,2,2]\n// console.log(howSum(300, [7, 14])); // => null won't run cuz target too big, needs to\n\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 3, 2, 2 ]",
+                                "null",
+                                "[ 2, 2, 2, 2 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "m = target sum\nn = numbers.length\n\n\n\n\n\n## time = O(n^m * m)\nthe branching factor is the base, which is the array numbers.length.\n\nthe exponent is the depth/height of the tree\n\n*imagine how deep the tree goes if the array was filled with ones. `howSum(7, [1,1,1,1,1,1,1]) => [1,1,1,1,1,1,1]` which would make `numbers.length` = `target sum`*\n\n## space complexity O(m)\nstack space is going to be the recursive stack space. the combined length of all of the arrays that we return is at most m\n\n\n\n\n\n## mistakes:\nmy return value, i didn't know how to return an array and also I forgot to include the results up until that point by spreading remainderResult\n\n```js\n       if (remainderResult !== null){\n        return [...remainderResult, num]\n       }\n```\n\nI forgot I could return an array just by making an array like [\"answer\", \"second answer\"] etc instead of creating an array to push values onto\n\n       specifically this portion\n\n       I also returned false instead of null which broke the code for \n```js\n    if (target < 0) return false\n```       \n\nif I returned false, I would have to return false on lines 12, 8, and 3 because line 8 checks if false, and the return value has to match the check\nI can return undefined, false, or null, or even a string as long as they all match, because of the check on line 8. just make sure to see what the problem statement wants as a return if the answer is not found\n\nnumberlist is [1,4,3]\n\n[...numberlist] is the spread operator\nyou can do [...numberlist, 70]\nthis will give you [1,4,3,70] basically adds the numbers of an array, without making it a nested array\n\n## Memoized howSum()"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const howSum = (target, numbers, memo={}) => {\n    if (target in memo) return memo[target]\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    for (let num of numbers) {\n      const remainder = target - num;\n      const remainderResult = howSum(remainder, numbers, memo);\n      if (remainderResult !== null) {\n        memo[target] = [...remainderResult, num]\n\n        return memo[target]\n      }\n    }\n    memo[target] = null;\n    // you can also return memo[target]\n    return null\n  };\n  \n  \n  console.log(howSum(7, [2, 3])); // => [3,2,2]\n  console.log(howSum(7, [5, 3, 4, 7])); // => [4,3]\n  console.log(howSum(7, [2, 4])); // => null\n  // console.log(howSum(8, [2, 3, 5])); // => [2,2,2,2]\n  // console.log(howSum(300, [7, 14])); // => null won't run cuz target too big, needs to\n  "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 3, 2, 2 ]",
+                                "[ 4, 3 ]",
+                                "null",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoHowSumFig3.png\" width=\"300\"/>\n\nmistakes: \ni did \n```js\nmemo = []\n```\n\ninstead of \n\n```js\nmemo={}\n```\n\nfor the default \n\nthings to consider: you want the key of your memo to be target here, because that's what your looking to sum up to"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}
