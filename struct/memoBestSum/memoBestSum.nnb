@@ -81,7 +81,21 @@
         {
             "language": "markdown",
             "source": [
-                "<img src=\"memoBestSumFig5.png\" width=\"800\" />"
+                "## Dynamic Programming\n\n<img src=\"memoBestSumFig5.png\" width=\"800\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
             ],
             "outputs": []
         }

@@ -3,7 +3,7 @@
         {
             "language": "markdown",
             "source": [
-                "<img src=\"memoCanConstructFig1.png\" width=\"600\" />\n\n\n"
+                "# canConstruct\n\n<img src=\"memoCanConstructFig1.png\" width=\"600\" />"
             ],
             "outputs": []
         },
@@ -24,7 +24,28 @@
         {
             "language": "markdown",
             "source": [
-                "<img src=\"memoCanConstructFig4.png\" width=\"600\" />\n"
+                "### find your base cases\n\nEasier to make a shorter string than a longer string (what's the smallest problem i can solve)\n\nthe smallest string possible is an empty string => `\"\"`\n\nthis will always return true, you just take 0 elements of the array, or an empty array `[]`\n\n```js\ncanConstruct('', ['cat', 'dog', 'mouse']) => true\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig4.png\" width=\"600\" />\n\n\n### how do i know what to put as the root\nstart with the target string at the root. the array of words doesn't change, so its a safe bet to use the target\n\n### how to shrink the target string:\n we need to use the array of words, and remove from the target string, so the words are our edges\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                " <img src=\"memoCanConstructFig10.png\" width=\"600\" />\n \n ### mistakes:\n don't take out strings from the middle of the word\n\n\n\n  ### fix:\n we took a prefix from the target\n only branch the children if you have a matching prefix in the word bank"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig4.png\" width=\"600\" />\n\n#### true base case\nif you get to an empty string, you found your `valid base case` for true\n\n#### false base case\nif you have no more options, return false"
             ],
             "outputs": []
         },
