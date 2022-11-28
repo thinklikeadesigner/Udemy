@@ -3,14 +3,14 @@
         {
             "language": "markdown",
             "source": [
-                "# Best Sum\n\n<img src=\"memoBestSumFig2.png\" width=\"800\" />\n\nPossible answers\n\n```js\nbestSum(7, [5, 3, 4, 7]) => [3,4], `[7]`\nbestSum(8, [2,3,5]) => [2,2,2,2],[2,3,3],`[3,5]`\n```\n\n<img src=\"memoBestSumFig1.png\" width=\"600\" />\n\nwe return an array\n\nat each node, make a decision for which return value is the smallest\n\nwe have to explore the whole tree\n\nat each node, choose the shortest choice\n\n\n```js\nbestSum(7, [5, 3, 4, 7]) => `[7]`\nbestSum(8, [2,3,5]) => `[3,5]`\nbestSum(8, [1,4,5]) => `[4,4]`\nbestSum(100, [1,2,25,25]) => `[25,25,25,25]`\n```\n\ncommon mistakes:\nalways picking the largest number in the array, this is not always true \n\n```js\nbestSum(8, [1,4,5]) => `[4,4]\n``` \nfor example if you take a 5 here you need to take 3 ones\n\nthis means you have to do an exhaustive search of every number in the given array\n\n\n## Brute force bestSum"
+                "# Best Sum\n\n<img src=\"memoBestSumFig2.png\" width=\"900\" />\n\nPossible answers\n\n```js\nbestSum(7, [5, 3, 4, 7]) => [3,4], `[7]`\nbestSum(8, [2,3,5]) => [2,2,2,2],[2,3,3],`[3,5]`\n```\n\n<img src=\"memoBestSumFig1.png\" width=\"1200\" />\n\nwe return an array\n\nat each node, make a decision for which return value is the smallest\n\nwe have to explore the whole tree\n\nat each node, choose the shortest choice\n\n\n```js\nbestSum(7, [5, 3, 4, 7]) => `[7]`\nbestSum(8, [2,3,5]) => `[3,5]`\nbestSum(8, [1,4,5]) => `[4,4]`\nbestSum(100, [1,2,25,25]) => `[25,25,25,25]`\n```\n\ncommon mistakes:\nalways picking the largest number in the array, this is not always true \n\n```js\nbestSum(8, [1,4,5]) => `[4,4]\n``` \nfor example if you take a 5 here you need to take 3 ones\n\nthis means you have to do an exhaustive search of every number in the given array\n\n\n## Brute force bestSum"
             ],
             "outputs": []
         },
         {
             "language": "javascript",
             "source": [
-                "const bestSum = (target, numbers) => {\n    // same base cases as howSum\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    // below shortestCombination is different from howSum\nlet shortestCombination = null;\n\n    for (let num of numbers) {\n        // make remainder like in howSum\n      const remainder = target - num;\n      const remainderCombination = bestSum(remainder, numbers);\n      // up until this point same as howSum, changes within the if clause below in order to make a comparison of min \n      if (remainderCombination !== null) {\n        // this is different from howSum, need to store in variable in order to compare\n       const combination =  [...remainderCombination, num]\n       if (shortestCombination === null || combination.length < shortestCombination.length) \n       // this is different, return statement at bottom\n       shortestCombination = combination\n      }\n    }\n    return shortestCombination\n  };\n  \n\nbestSum(7, [5, 3, 4, 7])\n// bestSum(8, [2,3,5])\n// bestSum(8, [1,4,5])\n// bestSum(100, [1,2,25,25])"
+                "const bestSum = (target, numbers) => {\n    // same base cases as howSum\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    // below shortestCombination is different from howSum\nlet shortestCombination = null;\n\n    for (let num of numbers) {\n        // make remainder like in howSum\n      const remainder = target - num;\n      const remainderCombination = bestSum(remainder, numbers);\n      // up until this point same as howSum, changes within the if clause below in order to make a comparison of min \n      if (remainderCombination !== null) {\n        // this is different from howSum, need to store in variable in order to compare\n       const combination =  [...remainderCombination, num]\n       if (shortestCombination === null || combination.length < shortestCombination.length) \n       // this is different, return statement at bottom\n       shortestCombination = combination\n      }\n    }\n    return shortestCombination\n  };\n  \n\n// bestSum(7, [5, 3, 4, 7])\nbestSum(8, [2,3,5])\nbestSum(8, [1,4,5])\n// bestSum(100, [1,2,25,25])"
             ],
             "outputs": [
                 {
@@ -19,7 +19,8 @@
                             "mime": "text/plain",
                             "value": [
                                 "[",
-                                "  \u001b[33m7\u001b[39m",
+                                "  \u001b[33m4\u001b[39m,",
+                                "  \u001b[33m4\u001b[39m",
                                 "]"
                             ]
                         }
@@ -37,7 +38,7 @@
         {
             "language": "javascript",
             "source": [
-                "const bestSum = (target, numbers, memo = {}) => {\n    // same base cases as howSum\n    if (target in memo) return memo[target]\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    // below shortestCombination is different from howSum\nlet shortestCombination = null;\n\n    for (let num of numbers) {\n        // make remainder like in howSum\n      const remainder = target - num;\n      const remainderCombination = bestSum(remainder, numbers, memo);\n      // up until this point same as howSum, changes within the if clause below in order to make a comparison of min \n      if (remainderCombination !== null) {\n        // this is different from howSum, need to store in variable in order to compare\n       const combination =  [...remainderCombination, num]\n       if (shortestCombination === null || combination.length < shortestCombination.length) \n       // this is different, return statement at bottom\n       shortestCombination = combination\n      }\n    }\n    memo[target] = shortestCombination\n    return memo[target]\n    // you can also return shortestCombination\n  };\n  \n\nbestSum(7, [5, 3, 4, 7])\n// bestSum(8, [2,3,5])\n// bestSum(8, [1,4,5])\nbestSum(100, [1,2,25,25])"
+                "const bestSum = (target, numbers, memo = {}) => {\n    // same base cases as howSum\n    if (target in memo) return memo[target]\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    // below shortestCombination is different from howSum\nlet shortestCombination = null;\n\n    for (let num of numbers) {\n        // make remainder like in howSum\n      const remainder = target - num;\n      const remainderCombination = bestSum(remainder, numbers, memo);\n      // up until this point same as howSum, changes within the if clause below in order to make a comparison of min \n      if (remainderCombination !== null) {\n        // this is different from howSum, need to store in variable in order to compare\n       const combination =  [...remainderCombination, num]\n       if (shortestCombination === null || combination.length < shortestCombination.length) \n       // this is different, return statement at bottom\n       shortestCombination = combination\n      }\n    }\n    memo[target] = shortestCombination\n    return memo[target]\n    // you can also return shortestCombination\n  };\n  \n\nbestSum(7, [5, 3, 4, 7])\n// bestSum(8, [2,3,5])\n// bestSum(8, [1,4,5])\n// bestSum(100, [1,2,25,25])"
             ],
             "outputs": [
                 {
@@ -46,10 +47,7 @@
                             "mime": "text/plain",
                             "value": [
                                 "[",
-                                "  \u001b[33m25\u001b[39m,",
-                                "  \u001b[33m25\u001b[39m,",
-                                "  \u001b[33m25\u001b[39m,",
-                                "  \u001b[33m25\u001b[39m",
+                                "  \u001b[33m7\u001b[39m",
                                 "]"
                             ]
                         }
