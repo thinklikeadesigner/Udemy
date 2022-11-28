@@ -256,7 +256,21 @@
         {
             "language": "markdown",
             "source": [
-                "### caveats and common mistakes\n\n- take the entire answer and put it in the memo\n  - **don't** try to proactively check for the child cases like `if ((m - 1 + ',' + n) in memo)`\n\n<br/>\n\n- pass the memo object in to the recursive calls of the fn\n  - if you don't, the recursive call will initialize an entirely new empty object from the default `memo = {}`\n\n<br/>\n\n- since there are 2 arguments *(besides memo)* in the fn `GridTraveler(m,n)` you need to create a **unique key**\n  - this will ensure that stuff like key for `17 and 1` is different from key `1 and 71` bc they both create `171` without comma separator const key = m + ',' + n"
+                "### caveats and common mistakes\n\n- take the entire answer and put it in the memo\n  - **don't** try to proactively check for the child cases like `if ((m - 1 + ',' + n) in memo)`\n\n<br/>\n\n- pass the memo object in to the recursive calls of the fn\n  - if you don't, the recursive call will initialize an entirely new empty object from the default `memo = {}`\n\n<br/>\n\n- since there are 2 arguments *(besides memo)* in the fn `GridTraveler(m,n)` you need to create a **unique key**\n  - this will ensure that stuff like key for `17 and 1` is different from key `1 and 71` bc they both create `171` without comma separator const key = m + ',' + n\n\n\n<img alt=\"fibFig18\" src=\"fibFig18.png\" width=\"400\"/>\n\n### time complexity O(m\\*n)\n### space complexity O(m + n)\nmemoized fn is O(m\\*n) because you have m*n distinct nodes\n\n<img alt=\"fibFig19\" src=\"fibFig19.png\" width=\"400\"/>\n\nComparing brute force only recursive with memoizatio + recursion"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "although the narrative of fibonacci and grid traveler seemed pretty different, they were really the same sort of story\ntry to think of recursive fn in terms of a tree, so you can see where you can optimize the brute force\n\n<img alt=\"fibFig20\" src=\"fibFig20.png\" width=\"400\"/>\n\nmake it work (brute force), then make it efficient (optimize). brute force to make sure your solution is correct, before optimizing\n\n\n#### brute force\n- how to visualize problem as tree: \n  - node of the tree is a problem\n  - the edge is shrinking the size of the problem (edge is where the logic happens)\n\nimplement recursion and then test it\n\n\n### make it efficient\n- memo object needs to have keys to represent arguments to our fn, and values that represent the return call of that fn\n  - a unique set of arguments should have a unique result\n- make sure the obj is shared in every recursive call, use a default object in top level call `memo = {}`\n- add new base case to check memo\n- to store memo just go to the return statement and put that result into the memo object \n```js\nreturn gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\n```\nbecomes\n```js\nmemo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\nreturn memo[key]\n```\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
             ],
             "outputs": []
         }

@@ -1,0 +1,11 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "### CanSum\n\n<img alt=\"canSumFig1\" src=\"canSumFig1.png\" width=\"600\" />\n\n```js\ncanSum(7, [5,3,4,7]) // => true\n```"
+            ],
+            "outputs": []
+        }
+    ]
+}
