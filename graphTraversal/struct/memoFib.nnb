@@ -174,7 +174,89 @@
         {
             "language": "markdown",
             "source": [
-                "<img alt=\"figFib15\" src=\"./figFib15.png\" width='400'/>\n\nThink about this by choosing the smallest possible input like\ngridTraveler(1,1) // 1\n\nif one of the dimensions is 0, there's no way to travel bc grid is empty\ngridTraveler(0,1) // 0\ngridTraveler(1,0) // 0\ngridTraveler(0,0) // 0\n<img alt=\"figFib16\" src=\"./figFib16.png\" width='400'/>\n\n\n#### time complexity is exponential at O(2^n + m), space complexity is linear at O(n + m)\n\nIt's m + n because each node has 2 input values, 2 arguments\n\n<img alt=\"figFib17\" src=\"figFib17.png\" width=\"400\" />"
+                "<img alt=\"figFib15\" src=\"./figFib15.png\" width='400'/>\n\nThink about this by choosing the smallest possible input like\n```js\ngridTraveler(1,1) // 1\n```\n\nthis gives us our first base case\n```js\nif (m === 1 && n === 1) return 1\n```\n\nif one of the dimensions is 0, there's no way to travel bc grid is empty\n\n```js\ngridTraveler(0,1) // 0\ngridTraveler(1,0) // 0\ngridTraveler(0,0) // 0\n```\n\nthis gives us our second base case\n```js\nif (m === 0 || n === 0 ) return 0\n```\n\n<img alt=\"figFib16\" src=\"./figFib16.png\" width='400'/>\n\nyou have two choices at every branch, either go right or go down. \nso in terms of (x,y) your new value is either (x - 1, y) or (x, y - 1)\n\nso gridTraveler((x - 1, y), (x, y - 1))\n\n\n#### time complexity is exponential at O(2^n + m), space complexity is linear at O(n + m)\n\nIt's m + n because each node has 2 input values, 2 arguments\n\n<img alt=\"figFib17\" src=\"figFib17.png\" width=\"400\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "*gridTraveler(a,b) is the same as gridTraveler(b,a)*\n\n`gridTraveler(2,3) is the same as gridTraveler(3,2)`\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const gridTraveler = (m,n) => {\nif (m === 1 && n === 1) return 1\nif (m === 0 || n === 0 ) return 0\n\nreturn gridTraveler(m - 1, n) + gridTraveler(m, n- 1);\n}\n\nconsole.log(gridTraveler(1,1))\nconsole.log(gridTraveler(2,3))\nconsole.log(gridTraveler(3,2))\nconsole.log(gridTraveler(3,3))\n// console.log(gridTraveler(18,18))\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "1",
+                                "3",
+                                "3",
+                                "6",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "You'll notice that these return the same answer, that's bc the grid is the same size.\n\n```js\nconsole.log(gridTraveler(2,3)) // 3\nconsole.log(gridTraveler(3,2)) // 3\n```"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "3",
+                                "3",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "won't run bc grid is too big, need to memoize\n\n```js\nconsole.log(gridTraveler(18,18)) // 2333606220\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const gridTraveler = (m,n, memo={}) => {\n    const key = m + ',' + n\n    if (key in memo) return memo[key]\n    // const key2 = n + ',' + m\n    // if (key2 in memo) return memo[key2] // further optimization bc both keys return the same answer\n    if (m === 1 && n === 1) return 1\n    if (m === 0 || n === 0 ) return 0\n    memo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\n\n    return memo[key]\n    }\n    console.log(gridTraveler(18,18)) // 2333606220"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2333606220",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### caveats and common mistakes\n\n- take the entire answer and put it in the memo\n  - **don't** try to proactively check for the child cases like `if ((m - 1 + ',' + n) in memo)`\n\n<br/>\n\n- pass the memo object in to the recursive calls of the fn\n  - if you don't, the recursive call will initialize an entirely new empty object from the default `memo = {}`\n\n<br/>\n\n- since there are 2 arguments *(besides memo)* in the fn `GridTraveler(m,n)` you need to create a **unique key**\n  - this will ensure that stuff like key for `17 and 1` is different from key `1 and 71` bc they both create `171` without comma separator const key = m + ',' + n"
             ],
             "outputs": []
         }
