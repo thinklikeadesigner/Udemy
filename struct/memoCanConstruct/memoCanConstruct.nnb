@@ -57,6 +57,26 @@
             "outputs": []
         },
         {
+            "language": "javascript",
+            "source": [
+                "const canConstruct = (target, wordBank) => {\nif (target === '') return true\n\nfor (let word of wordBank){\n        // when is it okay to make a word from the prefix\n\n    // we have an array so iterate through every option in the array\n    // we can check if a substring is a prefix of another string\n\n    if (target.indexOf(word) === 0) {\n        // if i have a prefix we can use it to shrink the target\n        const suffix = target.slice(word.length)\n        /*\n        word = 'pot\n        target = potato\n        'potato'\n        target.indexOf(word) => 0\n        target.slice(word.length) => 'ato'\n        \n        length of prefix which in this case is 3 'p' 'o' 't'\n        so we removed the entire beginning of the target string that is the length of the prefix\n        which gives us 'ato' for our new target\n        */\n\n        // now that we shrunk the target, our new target is the suffix\n\n\n        // we want to return a boolean, think of your return value, and add a check here\n        if (canConstruct(suffix, wordBank) === true) return true\n\n    }\n    // indexOf returns first matching element in array\n    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf\n\n}\n\n    return false\n}\n\nconsole.log(canConstruct('abcdef', ['ab', 'abc', 'cd','def','abcd'])) // true\nconsole.log(canConstruct('skateboard', ['bo', 'rd', 'ate','t','ska', 'sk', 'boar'])) // false\n// console.log(canConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true\n// console.log(canConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['eeeeee', 'eeeeee', 'eeeee','eeee','e', 'ee'])) // false times out"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "language": "markdown",
             "source": [
                 "<img src=\"memoCanConstructFig6.png\" width=\"600\" />\n"
