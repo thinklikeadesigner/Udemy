@@ -60,28 +60,28 @@
         {
             "language": "markdown",
             "source": [
-                "# mistakes: \n- forgot to include memo in recursive call"
+                "# mistakes: \n- forgot to include memo in recursive call\n\n#### time complexity O(n * m * m) or O(m^2 * n)\nm comes from target\nn comes from for loop\nadditional m comes from copying array `[...remainderCombination, num]` in the for loop\n\ntarget (height of tree) * branching factor (for loop) * copying array `[...remainderCombination, num]`\n\n\n#### space complexity O(m^2)\nm possibilities and for each of these keys, m values in the array\nheight of tree * array at each level"
             ],
             "outputs": []
         },
         {
             "language": "markdown",
             "source": [
-                ""
+                "<img src=\"memoBestSumFig3.png\" width=\"800\" />"
             ],
             "outputs": []
         },
         {
             "language": "markdown",
             "source": [
-                ""
+                "<img src=\"memoBestSumFig4.png\" width=\"800\" />"
             ],
             "outputs": []
         },
         {
             "language": "markdown",
             "source": [
-                ""
+                "<img src=\"memoBestSumFig5.png\" width=\"800\" />"
             ],
             "outputs": []
         }
