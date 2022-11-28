@@ -12,21 +12,7 @@
             "source": [
                 "const classicFib = (n) => {\n    if (n <= 2) return 1\n    return classicFib(n-1) + classicFib(n - 2);\n    }\n    \n    console.log(classicFib(6)) // 8\n    console.log(classicFib(7)) // 13\n    console.log(classicFib(8)) // 21\n    // console.log(fib(50)) // this will run for a long time, too big. // This simple implementation can be optimized\n    "
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "8",
-                                "13",
-                                "21",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -103,40 +89,14 @@
             "source": [
                 "1 in obj"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "text/plain",
-                            "value": [
-                                "\u001b[33mtrue\u001b[39m"
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "javascript",
             "source": [
                 "// js object, keys will be arg to fn, value will be the return // value\nconst memoFib = (n, memo = {}) => {\n    if (n in memo) return memo[n]\n    if (n <= 2) return 1\n    memo[n] =  memoFib(n-1, memo) + memoFib(n - 2, memo);\n    return memo[n]\n    }\n    \n    console.log(memoFib(6)) // 8\n    console.log(memoFib(7)) // 13\n    console.log(memoFib(8)) // 21\n    console.log(memoFib(50)) // runs almost instantly\n    "
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "8",
-                                "13",
-                                "21",
-                                "12586269025",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -157,19 +117,7 @@
             "source": [
                 "const gridTraveler = (m,n) => {\nconsole.log(m,n)\n}\n\ngridTraveler(2,3) // 3"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "2 3",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -190,42 +138,14 @@
             "source": [
                 "const gridTraveler = (m,n) => {\nif (m === 1 && n === 1) return 1\nif (m === 0 || n === 0 ) return 0\n\nreturn gridTraveler(m - 1, n) + gridTraveler(m, n- 1);\n}\n\nconsole.log(gridTraveler(1,1))\nconsole.log(gridTraveler(2,3))\nconsole.log(gridTraveler(3,2))\nconsole.log(gridTraveler(3,3))\n// console.log(gridTraveler(18,18))\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "1",
-                                "3",
-                                "3",
-                                "6",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
             "source": [
                 "You'll notice that these return the same answer, that's bc the grid is the same size.\n\n```js\nconsole.log(gridTraveler(2,3)) // 3\nconsole.log(gridTraveler(3,2)) // 3\n```"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "3",
-                                "3",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -239,19 +159,7 @@
             "source": [
                 "const gridTraveler = (m,n, memo={}) => {\n    const key = m + ',' + n\n    if (key in memo) return memo[key]\n    // const key2 = n + ',' + m\n    // if (key2 in memo) return memo[key2] // further optimization bc both keys return the same answer\n    if (m === 1 && n === 1) return 1\n    if (m === 0 || n === 0 ) return 0\n    memo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\n\n    return memo[key]\n    }\n    console.log(gridTraveler(18,18)) // 2333606220"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "2333606220",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -264,13 +172,6 @@
             "language": "markdown",
             "source": [
                 "although the narrative of fibonacci and grid traveler seemed pretty different, they were really the same sort of story\ntry to think of recursive fn in terms of a tree, so you can see where you can optimize the brute force\n\n<img alt=\"fibFig20\" src=\"fibFig20.png\" width=\"400\"/>\n\nmake it work (brute force), then make it efficient (optimize). brute force to make sure your solution is correct, before optimizing\n\n\n#### brute force\n- how to visualize problem as tree: \n  - node of the tree is a problem\n  - the edge is shrinking the size of the problem (edge is where the logic happens)\n\nimplement recursion and then test it\n\n\n### make it efficient\n- memo object needs to have keys to represent arguments to our fn, and values that represent the return call of that fn\n  - a unique set of arguments should have a unique result\n- make sure the obj is shared in every recursive call, use a default object in top level call `memo = {}`\n- add new base case to check memo\n- to store memo just go to the return statement and put that result into the memo object \n```js\nreturn gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\n```\nbecomes\n```js\nmemo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\nreturn memo[key]\n```\n"
-            ],
-            "outputs": []
-        },
-        {
-            "language": "markdown",
-            "source": [
-                ""
             ],
             "outputs": []
         }

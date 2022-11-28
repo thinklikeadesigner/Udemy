@@ -3,7 +3,70 @@
         {
             "language": "markdown",
             "source": [
-                "### CanSum\n\n<img alt=\"canSumFig1\" src=\"canSumFig1.png\" width=\"600\" />\n\n```js\ncanSum(7, [5,3,4,7]) // => true\n```"
+                "can't get output to display\n### CanSum\n\n<img alt=\"canSumFig1\" src=\"canSumFig1.png\" width=\"600\" />\n\n```js\ncanSum(7, [5,3,4,7]) // => true\ncanSum(7, [2,4]) // => true\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const canSum = (target, numbers) => {\n    if (target === 0) return true\n    if (target < 0) return false\n    for (let num of numbers) {\n        const remainder = target - num\n        if (canSum(remainder, numbers) === true) {\n            return true\n        }\n    }\n   return false\n}\n\nconsole.log(canSum(7, [2,3])) // => true\nconsole.log(canSum(7, [5,3,4,7])) // => true\nconsole.log(canSum(7, [2,4])) // => false\nconsole.log(canSum(8, [2,3,5])) // => true\nconsole.log(canSum(300, [7,14])) // => false"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                "true",
+                                "false",
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"canSumFig2\" src=\"canSumFig2.png\" width=\"600\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "the base of the exponent depends on the max number of branches at each node\nin this case, its the length of the numbers array\n\nthe exponent is the depth or height of the tree, m"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const canSum = (target, numbers, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === 0) return true\n    if (target < 0) return false\n\n\n\n    for (let num of numbers) {\n        const remainder = target - num\n        if (canSum(remainder, numbers, memo) === true) {\n            memo[target] = true\n            return memo[target]\n        }\n    }\n    memo[target] = false\n   return memo[target]\n}\n\n\nconsole.log(canSum(7, [2,3])) // => true\nconsole.log(canSum(7, [5,3,4,7])) // => true\nconsole.log(canSum(7, [2,4])) // => false\nconsole.log(canSum(8, [2,3,5])) // => true\nconsole.log(canSum(300, [7,14])) // => false"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### caveats\n- make sure to include allll return values that arent base case return values in memo.\n- if argument doesn't change, like the numbers array in can sum, you don't need to include it in the key"
             ],
             "outputs": []
         }
