@@ -1,0 +1,77 @@
+{
+    "cells": [
+        {
+            "language": "javascript",
+            "source": [
+                "const {display} = require('node-kernel');\ndisplay.text('Hello World');"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "Hello World"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const {display} = require('node-kernel');\ndisplay.markdown('# Markdown in notebooks');\ndisplay.markdown('Click [here](https://github.com)');"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/markdown",
+                            "value": [
+                                "# Markdown in notebooks"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/markdown",
+                            "value": [
+                                "Click [here](https://github.com)"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// Rich HTML output (with javascript).\nconst {display} = require('node-kernel');\nconst buttonText = 'Click me';\ndisplay.html(`\n<h1>hi</h1>\n    <button id='myButton'>${buttonText}</button>\n    <script type='text/javascript'>\n    (() => {\n        const btn = document.getElementById('myButton');\n        btn.addEventListener(\"click\", () => btn.innerText = 'You clicked the button');\n    })();\n    </script>\n`);\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/html",
+                            "value": [
+                                "<style> table, th, tr { text-align: left; }</style>",
+                                "<h1>hi</h1>",
+                                "    <button id='myButton'>Click me</button>",
+                                "    <script type='text/javascript'>",
+                                "    (() => {",
+                                "        const btn = document.getElementById('myButton');",
+                                "        btn.addEventListener(\"click\", () => btn.innerText = 'You clicked the button');",
+                                "    })();",
+                                "    </script>",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
