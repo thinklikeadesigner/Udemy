@@ -3,7 +3,7 @@
         {
             "language": "markdown",
             "source": [
-                "# memo allConstruct\n\n<img src=\"memoAllConstructFig1.png\" width=\"1200\" />"
+                "# memo allConstruct\n\n<img src=\"memoAllConstructFig1.png\" width=\"1200\" />\n\n```js\nallConstruct('purple', ['purp','p','ur', 'le','purpl']) =>\n [\n   [ 'purp', 'le' ],\n   [ 'p', 'ur', 'p', 'le' ] \n]\n```\n\n```js\nallConstruct('abcdef', ['ab','abc','cd', 'def','abcd','ef', 'c']) =>\n[\n  [ 'ab', 'cd', 'ef' ],\n  [ 'ab', 'c', 'def' ],\n  [ 'abc', 'def' ],\n  [ 'abcd', 'ef' ]\n]\n```"
             ],
             "outputs": []
         },
@@ -119,7 +119,7 @@
         {
             "language": "javascript",
             "source": [
-                "const allConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return [[]]\n\n    const result = []\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n          const suffixWays = allConstruct(suffix, wordBank) // we should assume this returns a 2d array\n    // where i messed up here is i didn't iterate over each item in suffixways\n    // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n          const targetWays = suffixWays.map((way) => [word, ...way])\n          // and i did have the intuition to create an array outside the for loop as well\n        result.push(...targetWays)\n        }   \n}\nmemo[target] = result\nreturn result\n}\n\n\nconsole.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // [ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]\nconsole.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef','c'])) \nconsole.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))\nconsole.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) "
+                "const allConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return [[]]\n\n    const result = []\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n          const suffixWays = allConstruct(suffix, wordBank) // we should assume this returns a 2d array\n    // where i messed up here is i didn't iterate over each item in suffixways\n    // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n          const targetWays = suffixWays.map((way) => [word, ...way])\n          // and i did have the intuition to create an array outside the for loop as well\n        result.push(...targetWays)\n        }   \n}\nmemo[target] = result\nreturn result\n}\n\n\n// console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // [ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]\n// console.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef','c'])) \n// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))\n// console.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) \nconsole.log(allConstruct('abcdef', ['ab','abc','cd', 'def','abcd','ef', 'c']))"
             ],
             "outputs": [
                 {
@@ -127,28 +127,11 @@
                         {
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
-                                "[ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]",
                                 "[",
-                                "  [ 'enter', 'a', 'p', 'ot', 'ent', 'p', 'ot' ],",
-                                "  [",
-                                "    'enter', 'a',",
-                                "    'p',     'ot',",
-                                "    'ent',   'p',",
-                                "    'o',     't'",
-                                "  ],",
-                                "  [",
-                                "    'enter', 'a',",
-                                "    'p',     'o',",
-                                "    't',     'ent',",
-                                "    'p',     'ot'",
-                                "  ],",
-                                "  [",
-                                "    'enter', 'a',",
-                                "    'p',     'o',",
-                                "    't',     'ent',",
-                                "    'p',     'o',",
-                                "    't'",
-                                "  ]",
+                                "  [ 'ab', 'cd', 'ef' ],",
+                                "  [ 'ab', 'c', 'def' ],",
+                                "  [ 'abc', 'def' ],",
+                                "  [ 'abcd', 'ef' ]",
                                 "]",
                                 ""
                             ]
@@ -160,7 +143,7 @@
         {
             "language": "markdown",
             "source": [
-                "m = target.length\nn = wordBank.length\n\n### Brute Force\n#### time complexity O(n^m*m)\n#### space complexity O(m) \nheight of the recursion tree\n\n"
+                "## mistakes:\n   where i messed up here is i didn't iterate over each item in suffixways\n```js\n    const targetWays = suffixWays.map((way) => [word, ...way])\n\n        // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n```\n\nalthough i did have the intuition to create an array outside the for loop\n\nI also didn't return a 2d array for my base case\n```js\n    if (target === '') return [[]]\n```\n\nm = target.length\nn = wordBank.length\n\n### Brute Force\n#### time complexity O(n^m*m)\n#### space complexity O(m) \nheight of the recursion tree\n\n"
             ],
             "outputs": []
         }
