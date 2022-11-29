@@ -8,9 +8,93 @@
             "outputs": []
         },
         {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig2.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig3.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig4.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig5.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig6.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig7.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig8.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig9.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig10.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig11.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig12.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig13.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
             "language": "javascript",
             "source": [
-                "const allConstruct = (target, wordBank) => {\n    if (target === '') return ''\n\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const allWords = allConstruct(target.slice(word.length), wordBank)\n            let h = [...allWords, word]\n           return h\n        }\n        \n    }\n    return []\n\n\n}\n\nconsole.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // true\nconsole.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])) // true\n// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])) // false\n// console.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
+                "const allConstruct = (target, wordBank) => {\n    if (target === '') return [[]]\n\n    const result = []\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n          const suffixWays = allConstruct(suffix, wordBank) // we should assume this returns a 2d array\n    // where i messed up here is i didn't iterate over each item in suffixways\n    // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n          const targetWays = suffixWays.map((way) => [word, ...way])\n          // and i did have the intuition to create an array outside the for loop as well\n        result.push(...targetWays)\n        }   \n}\nreturn result\n}\n\n\nconsole.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // true\nconsole.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef','c'])) // true\n// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])) // false\n// console.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
             ],
             "outputs": [
                 {
@@ -18,14 +102,67 @@
                         {
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
-                                "[ 'le', 'purp' ]",
-                                "[ 'cd', 'ab' ]",
+                                "[ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]",
+                                "[",
+                                "  [ 'ab', 'cd', 'ef' ],",
+                                "  [ 'ab', 'c', 'def' ],",
+                                "  [ 'abc', 'def' ],",
+                                "  [ 'abcd', 'ef' ]",
+                                "]",
                                 ""
                             ]
                         }
                     ]
                 }
             ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const allConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return [[]]\n\n    const result = []\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n          const suffixWays = allConstruct(suffix, wordBank) // we should assume this returns a 2d array\n    // where i messed up here is i didn't iterate over each item in suffixways\n    // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n          const targetWays = suffixWays.map((way) => [word, ...way])\n          // and i did have the intuition to create an array outside the for loop as well\n        result.push(...targetWays)\n        }   \n}\nmemo[target] = result\nreturn result\n}\n\n\nconsole.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // [ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]\nconsole.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef','c'])) \nconsole.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))\nconsole.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]",
+                                "[",
+                                "  [ 'enter', 'a', 'p', 'ot', 'ent', 'p', 'ot' ],",
+                                "  [",
+                                "    'enter', 'a',",
+                                "    'p',     'ot',",
+                                "    'ent',   'p',",
+                                "    'o',     't'",
+                                "  ],",
+                                "  [",
+                                "    'enter', 'a',",
+                                "    'p',     'o',",
+                                "    't',     'ent',",
+                                "    'p',     'ot'",
+                                "  ],",
+                                "  [",
+                                "    'enter', 'a',",
+                                "    'p',     'o',",
+                                "    't',     'ent',",
+                                "    'p',     'o',",
+                                "    't'",
+                                "  ]",
+                                "]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "m = target.length\nn = wordBank.length\n\n### Brute Force\n#### time complexity O(n^m*m)\n#### space complexity O(m) \nheight of the recursion tree\n\n"
+            ],
+            "outputs": []
         }
     ]
 }
