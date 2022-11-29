@@ -1,0 +1,174 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "<>"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# memo countConstruct\n\n<img alt=\"memoCountConstructFig1\" src=\"memoCountConstructFig1.png\" width=\"600\" />\n\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCountConstructFig3.png\" width=\"600\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const countConstruct = (target, wordBank) => {\n    if (target === '') return 1\n\n    let count = 0;\n\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n           count += countConstruct(target.slice(word.length), wordBank)\n        }\n    }\n    return count\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(countConstruct('purple', ['purp','p','ur','le','purpl'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(countConstruct('abcdef', ['ab', 'abc', 'cd','def','abcd'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "1",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(countConstruct('skateboard', ['bo', 'rd', 'ate','t','ska', 'sk', 'boar'])) // false"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "0",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(countConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "4",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// takes too long\n// console.log(countConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['eeeeee', 'eeeeee', 'eeeee','eeee','e', 'ee'])) // false times out"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img  src=\"memoCountConstructFig2.png\" width=\"600\" />\n\n\n## mistakes:\ni needed to keep track of count outside of the for loop\ninstead of returning at the bottom of the for loop i returned inside the for loop, so i couldn't return count which was outside the for loop\n\n## memoize countConstruct\n\n<img src=\"memoCountConstructFig3.png\" width=\"600\" />\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const countConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return 1\n\n    let count = 0;\n\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n           count += countConstruct(target.slice(word.length), wordBank, memo)\n        }\n    }\n    memo[target] = count\n    return      memo[target] \n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(countConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // 4"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "4",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(countConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['eeeeee', 'eeeeee', 'eeeee','eeee','e', 'ee'])) "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "0",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCountConstructFig4.png\" width=\"600\" />"
+            ],
+            "outputs": []
+        }
+    ]
+}
