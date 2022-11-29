@@ -143,7 +143,7 @@
         {
             "language": "markdown",
             "source": [
-                "## mistakes:\n   where i messed up here is i didn't iterate over each item in suffixways\n```js\n    const targetWays = suffixWays.map((way) => [word, ...way])\n\n        // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n```\n\nalthough i did have the intuition to create an array outside the for loop\n\nI also didn't return a 2d array for my base case\n```js\n    if (target === '') return [[]]\n```\n\nm = target.length\nn = wordBank.length\n\n\n#### time complexity O(n^m*m) which simplifies to O(n^m)\nn^m subarrays because n^m leaves\ncan't do any better than exponential\n#### space complexity O(m) \nheight of the recursion tree\n\n"
+                "## mistakes:\n   where i messed up here is i didn't iterate over each item in suffixways\n```js\n    const targetWays = suffixWays.map((way) => [word, ...way])\n\n        // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n```\n\nalthough i did have the intuition to create an array outside the for loop\n\nI also didn't return a 2d array for my base case\n```js\n    if (target === '') return [[]]\n```\n\nm = target.length\nn = wordBank.length\n\n\n#### time complexity O(n^m*m) which simplifies to O(n^m)\nn^m subarrays because n^m leaves\ncan't do any better than exponential\n#### space complexity O(m) \nheight of the recursion tree\nwhen the output is very large, we don't include the size of the result into the space complexity, just the stack space (result space would be exponential)\n\n"
             ],
             "outputs": []
         }
