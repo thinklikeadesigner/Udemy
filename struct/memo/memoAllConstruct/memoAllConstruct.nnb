@@ -1,0 +1,31 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# memo allConstruct\n\n<img src=\"memoAllConstructFig1.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const allConstruct = (target, wordBank) => {\n    if (target === '') return ''\n\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const allWords = allConstruct(target.slice(word.length), wordBank)\n            let h = [...allWords, word]\n           return h\n        }\n        \n    }\n    return []\n\n\n}\n\nconsole.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // true\nconsole.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd'])) // true\n// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])) // false\n// console.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 'le', 'purp' ]",
+                                "[ 'cd', 'ab' ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -114,14 +114,14 @@
         {
             "language": "markdown",
             "source": [
-                "<img  src=\"memoCountConstructFig2.png\" width=\"600\" />\n\n\n## mistakes:\ni needed to keep track of count outside of the for loop\ninstead of returning at the bottom of the for loop i returned inside the for loop, so i couldn't return count which was outside the for loop\n\n## memoize countConstruct\n\n<img src=\"memoCountConstructFig3.png\" width=\"600\" />\n"
+                "\n#### brute force time complexity O(n^m * m)\n\n#### brute force space complexity O(m^2)\n\n<img  src=\"memoCountConstructFig2.png\" width=\"600\" />\n\n\n## mistakes:\ni needed to keep track of count outside of the for loop\ninstead of returning at the bottom of the for loop i returned inside the for loop, so i couldn't return count which was outside the for loop\n\n## memoize countConstruct\n\n<img src=\"memoCountConstructFig3.png\" width=\"600\" />\n"
             ],
             "outputs": []
         },
         {
             "language": "javascript",
             "source": [
-                "const countConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return 1\n\n    let count = 0;\n\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n           count += countConstruct(target.slice(word.length), wordBank, memo)\n        }\n    }\n    memo[target] = count\n    return      memo[target] \n}"
+                "const countConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return 1\n\n    let count = 0;\n    // count at 0 will automatically return 0 for false branches\n    // by putting count here\n    // we can return a count at the bottom outside the for loop\n    // and acumulate an answer at each branch point\n    // because everytime we call the function, we branch at a different decision\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n           count += countConstruct(target.slice(word.length), wordBank, memo)\n        }\n    }\n    memo[target] = count\n    return      memo[target] \n}"
             ],
             "outputs": []
         },
@@ -166,7 +166,7 @@
         {
             "language": "markdown",
             "source": [
-                "<img src=\"memoCountConstructFig4.png\" width=\"600\" />"
+                "\nm = target.length\n\nn = wordBank.length\n\n#### memoized time complexity O(n * m^2) \n- same as canConstruct\n\n#### memoized space complexity O(m^2)\n- same as canConstruct\n\n<img src=\"memoCountConstructFig4.png\" width=\"600\" />"
             ],
             "outputs": []
         }
