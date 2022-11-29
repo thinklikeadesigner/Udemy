@@ -36,7 +36,14 @@
         {
             "language": "javascript",
             "source": [
-                "const gridTraveler = (m,n) => {\nif (m === 1 && n === 1) return 1\nif (m === 0 || n === 0 ) return 0\n\nreturn gridTraveler(m - 1, n) + gridTraveler(m, n- 1);\n}\n\nconsole.log(gridTraveler(1,1))\nconsole.log(gridTraveler(2,3))\nconsole.log(gridTraveler(3,2))\nconsole.log(gridTraveler(3,3))\n// console.log(gridTraveler(18,18))\n"
+                "const gridTraveler = (m,n) => {\nif (m === 1 && n === 1) return 1\nif (m === 0 || n === 0 ) return 0\n\nreturn gridTraveler(m - 1, n) + gridTraveler(m, n- 1);\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(gridTraveler(1,1))"
             ],
             "outputs": [
                 {
@@ -45,8 +52,62 @@
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
                                 "1",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(gridTraveler(2,3))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "3",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(gridTraveler(3,2))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "3",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(gridTraveler(3,3))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "6",
                                 ""
                             ]
@@ -54,6 +115,13 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// console.log(gridTraveler(18,18))"
+            ],
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -72,7 +140,26 @@
         {
             "language": "javascript",
             "source": [
-                "const gridTraveler = (m,n, memo={}) => {\n    const key = m + ',' + n\n    if (key in memo) return memo[key]\n    // const key2 = n + ',' + m\n    // if (key2 in memo) return memo[key2] // further optimization bc both keys return the same answer\n    if (m === 1 && n === 1) return 1\n    if (m === 0 || n === 0 ) return 0\n    memo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\n\n    return memo[key]\n    }\n    console.log(gridTraveler(18,18)) // 2333606220"
+                "const gridTraveler = (m,n, memo={}) => {\n    const key = m + ',' + n\n    if (key in memo) return memo[key]\n    // const key2 = n + ',' + m\n    // if (key2 in memo) return memo[key2] // further optimization bc both keys return the same answer\n    if (m === 1 && n === 1) return 1\n    if (m === 0 || n === 0 ) return 0\n    memo[key] = gridTraveler(m - 1, n, memo) + gridTraveler(m, n- 1, memo);\n\n    return memo[key]\n    }"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2333606220",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(gridTraveler(18,18)) // 2333606220"
             ],
             "outputs": [
                 {

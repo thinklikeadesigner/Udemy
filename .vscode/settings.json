@@ -1,0 +1,8 @@
+{
+    "notebook.output.textLineLimit": 300,
+    "output.smartScroll.enabled": true,
+    "notebook.consolidatedOutputButton": true,
+    "notebook.showFoldingControls": "always",
+    "notebook.outputFontSize": 0,
+    "notebook.outputFontFamily": "Fira Code"
+}

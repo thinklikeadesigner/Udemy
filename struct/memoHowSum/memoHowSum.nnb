@@ -10,7 +10,14 @@
         {
             "language": "javascript",
             "source": [
-                "const howSum = (target, numbers, values=[]) => {\n  if (target === 0) return [];\n  if (target < 0) return null;\n\n  for (let num of numbers) {\n    const remainder = target - num;\n    const remainderResult = howSum(remainder, numbers, values);\n    if (remainderResult !== null) {\n      return [...remainderResult, num]\n    }\n  }\n  return null;\n};\n\nconsole.log(howSum(7, [2, 3])); // => [3,2,2]\n// console.log(howSum(7, [5, 3, 4, 7])); // => [4,3]\nconsole.log(howSum(7, [2, 4])); // => [2,4]\nconsole.log(howSum(8, [2, 3, 5])); // => [2,2,2,2]\n// console.log(howSum(300, [7, 14])); // => null won't run cuz target too big, needs to\n\n"
+                "const howSum = (target, numbers, values=[]) => {\n  if (target === 0) return [];\n  if (target < 0) return null;\n\n  for (let num of numbers) {\n    const remainder = target - num;\n    const remainderResult = howSum(remainder, numbers, values);\n    if (remainderResult !== null) {\n      return [...remainderResult, num]\n    }\n  }\n  return null;\n};"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(7, [2, 3])); // => [3,2,2]"
             ],
             "outputs": [
                 {
@@ -19,7 +26,62 @@
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
                                 "[ 3, 2, 2 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(7, [5, 3, 4, 7])); // => [4,3]"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 4, 3 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(7, [2, 4])); // => [2,4]"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "null",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(8, [2, 3, 5])); // => [2,2,2,2]"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "[ 2, 2, 2, 2 ]",
                                 ""
                             ]
@@ -27,6 +89,13 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// won't run cuz target too big\n// console.log(howSum(300, [7, 14])); // => null "
+            ],
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -38,7 +107,14 @@
         {
             "language": "javascript",
             "source": [
-                "const howSum = (target, numbers, memo={}) => {\n    if (target in memo) return memo[target]\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    for (let num of numbers) {\n      const remainder = target - num;\n      const remainderResult = howSum(remainder, numbers, memo);\n      if (remainderResult !== null) {\n        memo[target] = [...remainderResult, num]\n\n        return memo[target]\n      }\n    }\n    memo[target] = null;\n    // you can also return memo[target]\n    return null\n  };\n  \n  \n  console.log(howSum(7, [2, 3])); // => [3,2,2]\n  console.log(howSum(7, [5, 3, 4, 7])); // => [4,3]\n  console.log(howSum(7, [2, 4])); // => null\n  // console.log(howSum(8, [2, 3, 5])); // => [2,2,2,2]\n  // console.log(howSum(300, [7, 14])); // => null won't run cuz target too big, needs to\n  "
+                "const howSum = (target, numbers, memo={}) => {\n    if (target in memo) return memo[target]\n    if (target === 0) return [];\n    if (target < 0) return null;\n  \n    for (let num of numbers) {\n      const remainder = target - num;\n      const remainderResult = howSum(remainder, numbers, memo);\n      if (remainderResult !== null) {\n        memo[target] = [...remainderResult, num]\n\n        return memo[target]\n      }\n    }\n    memo[target] = null;\n    // you can also return memo[target]\n    return null\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(7, [2, 3])); // => [3,2,2]"
             ],
             "outputs": [
                 {
@@ -47,7 +123,81 @@
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
                                 "[ 3, 2, 2 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(7, [5, 3, 4, 7])); // => [4,3]"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "[ 4, 3 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(7, [2, 4])); // => null"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "null",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(howSum(8, [2, 3, 5])); // => [2,2,2,2]"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 2, 2, 2, 2 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "  console.log(howSum(300, [7, 14])); // => null won't run cuz target too big, needs to"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
                                 "null",
                                 ""
                             ]
