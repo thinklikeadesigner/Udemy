@@ -242,7 +242,20 @@
             "source": [
                 "const pairProduct = (numbers, targetProduct) => {\n    console.log({targetProduct})\n      console.log({numbers})\n      for (let num in numbers) {\n            if (numbers[num] !== 0 && targetProduct !== 0 && numbers[num] > 0 && targetProduct > 0){\n                let rem = targetProduct / numbers[num]\n                console.log({rem})\n                for (let j = 1; j <= numbers.length; j++){\n                  if (numbers[j] == rem){\n                    return [Number(num), j]\n                  }\n                }\n      }\n        \n      }\n    };\n    \n          \n    console.log(pairProduct([3, 2, 5, 4, 1], 8)); // -> [1, 3])\n    console.log(pairProduct([3, 2, 5, 4, 1], 10)); // -> [1, 2])\n    console.log(pairProduct([4, 7, 9, 2, 5, 1], 5)); // -> [4, 5])\n    console.log(pairProduct([4, 7, 9, 2, 5, 1], 35)); // -> [1, 4])\n      "
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "{ targetProduct: 8 }",
+                                "[ 1, 4 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
             "language": "markdown",
@@ -302,6 +315,34 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## structy implementation five sort"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const fiveSort = (nums) => {\n    let i = 0;\n    let j = nums.length - 1;\n    while (i < j) {\n      if (nums[j] === 5) {\n        j -= 1;\n      } else if (nums[i] === 5) {\n        [ nums[i], nums[j] ] = [ nums[j], nums[i] ];\n        i += 1;\n      } else {\n        i += 1;\n      }\n    }\n  \n    return nums;\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "n = array size\n\n## time complexity  Time: O(n)\n\n## space complexity Space: O(1)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
+            ],
+            "outputs": []
         }
     ]
 }
