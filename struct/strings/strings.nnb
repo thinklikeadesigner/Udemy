@@ -205,6 +205,27 @@
         {
             "language": "markdown",
             "source": [
+                "## structy of MOST FREQUENT CHAR"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const mostFrequentChar = (s) => {\n    const count = {};\n    \n    for (let char of s) {\n      if (!(char in count)) {\n        count[char] = 0;\n      }\n      count[char] += 1\n    }\n    \n    let best = null;\n    for (let char of s) {\n      if (best === null || count[char] > count[best]) {\n        best = char;\n      }\n    }\n    return best;\n  };\n\n//   n = length of string\n// Time: O(n)\n// Space: O(n)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "iterating through the string and not the object is important bc you want to return the earliest occurance if there's a tie\n\n```js\n      for (let g in s)\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
                 "## My implementation of PAIR SUM\n\n## mistakes:\n\ni was trying to use `includes()` and `indexOf()` but i couldnt get that to work so I just iterated until i found the number that matched the remainder."
             ],
             "outputs": []
@@ -233,7 +254,21 @@
         {
             "language": "markdown",
             "source": [
-                "## my implementation PAIR SUM\n\n## MISTAKES:\n\ni forgot to exclude the first index, because if the index is a square root of the answer it will pick that index twice\n\n"
+                "## structy of PAIR SUM"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const pairSum = (numbers, targetSum) => {\n    const previousNums = {};\n    for (let i = 0; i < numbers.length; i += 1) {\n      const num = numbers[i];\n      const complement = targetSum - num;\n      if (complement in previousNums) return [i, previousNums[complement]];\n      \n      previousNums[num] = i;\n    }\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## my implementation PAIR PRODUCT\n\n## MISTAKES:\n\ni forgot to exclude the first index, because if the index is a square root of the answer it will pick that index twice\n\n"
             ],
             "outputs": []
         },
@@ -260,6 +295,20 @@
         {
             "language": "markdown",
             "source": [
+                "## STRUCTY  PAIR PRODUCT"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const pairProduct = (numbers, targetProduct) => {\n    const previousNums = {};\n    for (let i = 0; i < numbers.length; i += 1) {\n      const num = numbers[i];\n      const complement = targetProduct / num;\n      \n      if (complement in previousNums) return [ previousNums[complement], i ];\n      \n      previousNums[num] = i;\n    }\n  };\n  "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
                 "## my implementation of intersection (13 min)\n\n## mistakes:\n\ntimed out on last test so i reduced the problem space by slicing out each index\n\nno idea why adding ` arr.slice(num);` makes it pass but it does"
             ],
             "outputs": []
@@ -267,7 +316,7 @@
         {
             "language": "javascript",
             "source": [
-                "const intersection = (a, b) => {\n  if (a.length == 0 || b.length == 0) return [];\n  let arr = [];\n  for (let num of a) {\n    if (b.includes(num)) arr.push(num);\n    arr.slice(num);\n  }\n  console.log(arr);\n  return arr;\n};\n\nconsole.log(intersection([], [])); // -> [2,6]\nconsole.log(intersection([2, 4, 6], [4, 2])); // -> [2,4]\nconsole.log(intersection([4, 2, 1], [1, 2, 4, 6])); // -> [1,2,4]\nconsole.log(intersection([0, 1, 2], [10, 11])); // -> []\n"
+                "const intersection = (a, b) => {\n  // if (a.length == 0 || b.length == 0) return [];\n  let arr = [];\n  for (let num of a) {\n    if (b.includes(num)) arr.push(num);\n    // arr.slice(num);\n  }\n  console.log(arr);\n  return arr;\n};\n\nconsole.log(intersection([], [])); // -> [2,6]\nconsole.log(intersection([2, 4, 6], [4, 2])); // -> [2,4]\nconsole.log(intersection([4, 2, 1], [1, 2, 4, 6])); // -> [1,2,4]\nconsole.log(intersection([0, 1, 2], [10, 11])); // -> []\n"
             ],
             "outputs": [
                 {
@@ -277,12 +326,75 @@
                             "value": [
                                 "[]",
                                 "[]",
+                                "[ 2, 4 ]",
+                                "[ 2, 4 ]",
+                                "[ 4, 2, 1 ]",
+                                "[ 4, 2, 1 ]",
+                                "[]",
+                                "[]",
                                 ""
                             ]
                         }
                     ]
                 }
             ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "THIS TIMES OUT WITH BRUTE FORCE, USE SET\n\n## set implementation\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n  const setA = new Set(a);\n  let arr = [];\n  for (let num of b) {\n    if (setA.has(num)) {\n      arr.push(num);\n    }\n  }\n  return arr;\n};\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## STRUCTY INTERSECTION brute force"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n    const result = [];\n    for (let item of b) {\n      if (a.includes(item)) {\n        result.push(item);\n      }\n    }\n    return result;\n  };\n\n  console.log(intersection([], [])); // -> [2,6]\nconsole.log(intersection([2, 4, 6], [4, 2])); // -> [2,4]\nconsole.log(intersection([4, 2, 1], [1, 2, 4, 6])); // -> [1,2,4]\nconsole.log(intersection([0, 1, 2], [10, 11])); // -> []"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[]",
+                                "[ 4, 2 ]",
+                                "[ 1, 2, 4 ]",
+                                "[]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## STRUCTY INTERSECTION using set"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n    const result = [];\n    const setA = new Set(a);\n    for (let item of b) {\n      if (setA.has(item)) {\n        result.push(item);\n      }\n    }\n    return result;\n  };"
+            ],
+            "outputs": []
         },
         {
             "language": "markdown",

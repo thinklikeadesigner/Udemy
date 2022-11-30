@@ -1,0 +1,11 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# get node value 2 min\n\n# reverse list 9 min, mistake: wrong order of assigning node pointers\n\n# zipperlist 33 min, mistake: should have used a counter variable so list 1 is even number and list 2 is odd number\n\n# merge list, approach at 4 min, after hint 16min mistakes: i didn't check the val, i did `current1 > current2` not c`urrent1.val > current2`\n\n\n# is univalue list 14min set initial currentVal to null instead of initiating with head1.val to compare so alsways failed\n\n\n# longest streak 47 min and looked at solution. didnt set previous value to null. should set prev value to current val after going through loop, not before\n\n# remove node 5min : mistake is assigning prevnode correctly\n\n"
+            ],
+            "outputs": []
+        }
+    ]
+}

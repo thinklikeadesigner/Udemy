@@ -1,0 +1,11 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "first thing, set your return type and how to pass result\n\nfigure out how iteration ends\n\nwhat are your if and else cases, and your edge cases\n\ncheck objects and arrays, for in vs for of, do you have an object or \n\nFor more details, see [jsnotes](./jsnotes.nnb#for-of).\n\nif two inputs, two variables for time complexity and see if adding or multiplying. if adding, O(n)\n\n"
+            ],
+            "outputs": []
+        }
+    ]
+}
