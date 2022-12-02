@@ -1,0 +1,432 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# DEPTH FIRST VALUES binary tree\n\nmistakes:\n1. forgetting to pass in all arguments to recursive function\n2. forgetting to check for `stack.length > 0`, not just `stack > 0`\n3. wrong order of recursive calls (left before right) will fail tests\n4. make sure your return value is the right one\n5. \n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n  "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "/*\nITERATIVE\n*/\n// const depthFirstValues = (root) => {\n// if (root === null) return []\n// const result = []\n// const stack = [root]\n\n// while (stack.length > 0){\n// let node = stack.pop()\n// result.push(node.val)\n\n// if (node.left) stack.push(node.left)\n// if (node.right) stack.push(node.right)\n\n// }\n\n// return result\n// }\n\n/*\nRECURSIVE\n*/\nconst depthFirstValues = (root) => {\nif (root === null) return []\n\nlet left = depthFirstValues(root.left)\nlet right = depthFirstValues(root.right)\n\nreturn [root.val, ...left, ...right]\n\n}\n\n// const depthFirstValues = (root) => {\n//     if (root === null) return []\n//     return [root.val, ...depthFirstValues(root.left), ...depthFirstValues(root.right)]\n//     }\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\nconst b = new Node('b');\nconst c = new Node('c');\nconst d = new Node('d');\nconst e = new Node('e');\nconst f = new Node('f');\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n\ndepthFirstValues(a); \n//    -> ['a', 'b', 'd', 'e', 'c', 'f']"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m,",
+                                "  \u001b[32m'b'\u001b[39m,",
+                                "  \u001b[32m'd'\u001b[39m,",
+                                "  \u001b[32m'e'\u001b[39m,",
+                                "  \u001b[32m'c'\u001b[39m,",
+                                "  \u001b[32m'f'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\nconst b = new Node('b');\nconst c = new Node('c');\nconst d = new Node('d');\nconst e = new Node('e');\nconst f = new Node('f');\nconst g = new Node('g');\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n//    /\n//   g\n\ndepthFirstValues(a); \n\n//    -> ['a', 'b', 'd', 'e', 'g', 'c', 'f']"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m,",
+                                "  \u001b[32m'b'\u001b[39m,",
+                                "  \u001b[32m'd'\u001b[39m,",
+                                "  \u001b[32m'e'\u001b[39m,",
+                                "  \u001b[32m'g'\u001b[39m,",
+                                "  \u001b[32m'c'\u001b[39m,",
+                                "  \u001b[32m'f'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\n//      a\ndepthFirstValues(a); \n//    -> ['a']"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\nconst b = new Node('b');\nconst c = new Node('c');\nconst d = new Node('d');\nconst e = new Node('e');\n\na.right = b;\nb.left = c;\nc.right = d;\nd.right = e;\n\n//      a\n//       \\\n//        b\n//       /\n//      c\n//       \\\n//        d\n//         \\\n//          e\n\ndepthFirstValues(a); \n//    -> ['a', 'b', 'c', 'd', 'e']"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m,",
+                                "  \u001b[32m'b'\u001b[39m,",
+                                "  \u001b[32m'c'\u001b[39m,",
+                                "  \u001b[32m'd'\u001b[39m,",
+                                "  \u001b[32m'e'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "\ndepthFirstValues(null); \n//    -> []"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# BREATH FIRST VALUES binary tree"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n  \n  const breadthFirstValues = (root) => {\n    if (root === null) return []\n    const result = []\n\n    const queue = [root]\n\n    while (queue.length > 0){\n      let node = queue.shift()\n      result.push(node.val)\n\n      if (node.left) queue.push(node.left)\n      if (node.right) queue.push(node.right)\n\n\n    }\n\n\n    return result\n  \n  }"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\nconst b = new Node('b');\nconst c = new Node('c');\nconst d = new Node('d');\nconst e = new Node('e');\nconst f = new Node('f');\nconst g = new Node('g');\nconst h = new Node('h');\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\nf.right = h;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n//    /       \\\n//   g         h\n\nbreadthFirstValues(a); \n//   -> ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m,",
+                                "  \u001b[32m'b'\u001b[39m,",
+                                "  \u001b[32m'c'\u001b[39m,",
+                                "  \u001b[32m'd'\u001b[39m,",
+                                "  \u001b[32m'e'\u001b[39m,",
+                                "  \u001b[32m'f'\u001b[39m,",
+                                "  \u001b[32m'g'\u001b[39m,",
+                                "  \u001b[32m'h'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\n\n//      a\n\nbreadthFirstValues(a); \n//    -> ['a']\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\nconst b = new Node('b');\nconst c = new Node('c');\nconst d = new Node('d');\nconst e = new Node('e');\nconst x = new Node('x');\n\na.right = b;\nb.left = c;\nc.left = x;\nc.right = d;\nd.right = e;\n\n//      a\n//       \\\n//        b\n//       /\n//      c\n//    /  \\\n//   x    d\n//         \\\n//          e\n\nbreadthFirstValues(a); \n//    -> ['a', 'b', 'c', 'x', 'd', 'e']\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[32m'a'\u001b[39m,",
+                                "  \u001b[32m'b'\u001b[39m,",
+                                "  \u001b[32m'c'\u001b[39m,",
+                                "  \u001b[32m'x'\u001b[39m,",
+                                "  \u001b[32m'd'\u001b[39m,",
+                                "  \u001b[32m'e'\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "breadthFirstValues(null); \n//    -> []\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# TREE SUM binary tree"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n// RECURSIVE\n// const treeSum = (root) => {\n//   if (root === null) return 0\n  \n//   return root.val + treeSum(root.left) + treeSum(root.right)\n  \n  \n//   }\n\n// ITERATIVE\nconst treeSum = (root) => {\nif (root === null) return 0\nlet sum = 0\nlet queue = [root]\n\nwhile (queue.length > 0){\nlet node = queue.shift()\nsum += node.val\n\nif (node.left !== null) queue.push(node.left)\nif (node.right !== null) queue.push(node.right)\n\n}\n\nreturn sum\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(3);\nconst b = new Node(11);\nconst c = new Node(4);\nconst d = new Node(4);\nconst e = new Node(-2);\nconst f = new Node(1);\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//       3\n//    /    \\\n//   11     4\n//  / \\      \\\n// 4   -2     1\n\ntreeSum(a); // -> 21"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m21\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(1);\nconst b = new Node(6);\nconst c = new Node(0);\nconst d = new Node(3);\nconst e = new Node(-6);\nconst f = new Node(2);\nconst g = new Node(2);\nconst h = new Node(2);\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\nf.right = h;\n\n//      1\n//    /   \\\n//   6     0\n//  / \\     \\\n// 3   -6    2\n//    /       \\\n//   2         2\n\ntreeSum(a); // -> 10"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m10\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "treeSum(null); // -> 0"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m0\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# TREE INCLUDES binary tree\n\nbase cases:\n\n- affirmative base case, we found our value\n- negative base case, we didn't find our value so we've reached a null node \n\nLOGICAL OR\n\n- false and false => true\n- true and false => true\n- false and true => true\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n  \n\n// const treeIncludes = (root, target) => {\n// if (root === null) return false\n\n// if (root.val === target ) return true\n\n// let left = treeIncludes(root.left, target)\n// let right = treeIncludes(root.right, target)\n\n// return left || right\n\n\n// }\n\n// BFS\nconst treeIncludes = (root, target) => {\nif (root === null) return false\nconst queue = [root]\n\n\nwhile (queue.length > 0){\n  let node = queue.shift()\n  if (node.val === target) return true\n\n  if(node.left) queue.push(node.left)\n  if(node.right) queue.push(node.right)\n}\n\nreturn false\n}\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "\nconst a = new Node(\"a\");\nconst b = new Node(\"b\");\nconst c = new Node(\"c\");\nconst d = new Node(\"d\");\nconst e = new Node(\"e\");\nconst f = new Node(\"f\");\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n\ntreeIncludes(a, \"e\"); // -> true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mtrue\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(\"a\");\nconst b = new Node(\"b\");\nconst c = new Node(\"c\");\nconst d = new Node(\"d\");\nconst e = new Node(\"e\");\nconst f = new Node(\"f\");\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n\ntreeIncludes(a, \"a\"); // -> true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mtrue\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(\"a\");\nconst b = new Node(\"b\");\nconst c = new Node(\"c\");\nconst d = new Node(\"d\");\nconst e = new Node(\"e\");\nconst f = new Node(\"f\");\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n\ntreeIncludes(a, \"n\"); // -> false\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mfalse\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(\"a\");\nconst b = new Node(\"b\");\nconst c = new Node(\"c\");\nconst d = new Node(\"d\");\nconst e = new Node(\"e\");\nconst f = new Node(\"f\");\nconst g = new Node(\"g\");\nconst h = new Node(\"h\");\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\nf.right = h;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n//    /       \\\n//   g         h\n\ntreeIncludes(a, \"f\"); // -> true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mtrue\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(\"a\");\nconst b = new Node(\"b\");\nconst c = new Node(\"c\");\nconst d = new Node(\"d\");\nconst e = new Node(\"e\");\nconst f = new Node(\"f\");\nconst g = new Node(\"g\");\nconst h = new Node(\"h\");\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\nf.right = h;\n\n//      a\n//    /   \\\n//   b     c\n//  / \\     \\\n// d   e     f\n//    /       \\\n//   g         h\n\ntreeIncludes(a, \"p\"); // -> false\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mfalse\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "treeIncludes(null, \"b\"); // -> false\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33mfalse\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
