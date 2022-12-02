@@ -309,7 +309,7 @@
         {
             "language": "markdown",
             "source": [
-                "# TREE INCLUDES binary tree\n\nbase cases:\n\n- affirmative base case, we found our value\n- negative base case, we didn't find our value so we've reached a null node \n\nLOGICAL OR\n\n- false and false => true\n- true and false => true\n- false and true => true\n"
+                "# TREE INCLUDES binary tree\n\nbase cases:\n\n**always lead with base cases that evaluate to null**\n\n- affirmative base case, we found our value\n- negative base case, we didn't find our value so we've reached a null node \n\nLOGICAL OR\n\n- false and false => true\n- true and false => true\n- false and true => true\n"
             ],
             "outputs": []
         },
@@ -422,6 +422,93 @@
                             "mime": "text/plain",
                             "value": [
                                 "\u001b[33mfalse\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# TREE MIN VALUE binary tree\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n// recursive  \n  // const treeMinValue = (root) => {\n  // if (root === null ) return Infinity\n  //   let minLeft = treeMinValue(root.left)\n  //   let minRight = treeMinValue(root.right)\n  //   return Math.min(root.val, minRight, minLeft)\n  // }\n  \n  // iterative\n  // const treeMinValue = (root) => {\n//   if (root === null) return Infinity\n//     let stack = [root]\n//     let currentMin = Infinity\n\n//     while (stack.length > 0){\n//       let node = stack.pop()\n//       if (node.val < currentMin){\n//         currentMin = node.val\n//       }\n//       if (node.left) stack.push(node.left)\n//       if (node.right) stack.push(node.right)\n\n\n//     }\n// return currentMin\n//   }\n\n// BFS\nconst treeMinValue = (root) => {\nif (root === null) return Infinity\nlet currentMin = Infinity\nlet queue = [root]\n\nwhile (queue.length > 0){\nlet node = queue.shift()\nif (node.val < currentMin) currentMin = node.val\n\nif (node.right) queue.push(node.right)\nif (node.left) queue.push(node.left)\n\n\n\n}\n\n\nreturn currentMin\n}\n  "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "\n  const a = new Node(3);\n  const b = new Node(11);\n  const c = new Node(4);\n  const d = new Node(4);\n  const e = new Node(-2);\n  const f = new Node(1);\n  \n  a.left = b;\n  a.right = c;\n  b.left = d;\n  b.right = e;\n  c.right = f;\n  \n  //       3\n  //    /    \\\n  //   11     4\n  //  / \\      \\\n  // 4   -2     1\n  \n  console.log(treeMinValue(a)); // -> -2"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "-2",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(5);\nconst b = new Node(11);\nconst c = new Node(3);\nconst d = new Node(4);\nconst e = new Node(14);\nconst f = new Node(12);\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//       5\n//    /    \\\n//   11     3\n//  / \\      \\\n// 4   14     12\n\ntreeMinValue(a); // -> 3"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m3\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(-1);\nconst b = new Node(-6);\nconst c = new Node(-5);\nconst d = new Node(-3);\nconst e = new Node(-4);\nconst f = new Node(-13);\nconst g = new Node(-2);\nconst h = new Node(-2);\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\nf.right = h;\n\n//        -1\n//      /   \\\n//    -6    -5\n//   /  \\     \\\n// -3   -4   -13\n//     /       \\\n//    -2       -2\n\ntreeMinValue(a); // -> -13\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m-13\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(42);\n\n//        42\n\ntreeMinValue(a); // -> 42\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m42\u001b[39m"
                             ]
                         }
                     ]
