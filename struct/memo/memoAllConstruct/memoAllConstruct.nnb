@@ -1,0 +1,151 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# memo allConstruct\n\n<img src=\"memoAllConstructFig1.png\" width=\"1200\" />\n\n```js\nallConstruct('purple', ['purp','p','ur', 'le','purpl']) =>\n [\n   [ 'purp', 'le' ],\n   [ 'p', 'ur', 'p', 'le' ] \n]\n```\n\n```js\nallConstruct('abcdef', ['ab','abc','cd', 'def','abcd','ef', 'c']) =>\n[\n  [ 'ab', 'cd', 'ef' ],\n  [ 'ab', 'c', 'def' ],\n  [ 'abc', 'def' ],\n  [ 'abcd', 'ef' ]\n]\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig2.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig3.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig4.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig5.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig6.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig7.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig8.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig9.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig10.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig11.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig12.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoAllConstructFig13.png\" width=\"1200\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const allConstruct = (target, wordBank) => {\n    if (target === '') return [[]]\n\n    const result = []\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n          const suffixWays = allConstruct(suffix, wordBank) // we should assume this returns a 2d array\n    // where i messed up here is i didn't iterate over each item in suffixways\n    // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n          const targetWays = suffixWays.map((way) => [word, ...way])\n          // and i did have the intuition to create an array outside the for loop as well\n        result.push(...targetWays)\n        }   \n}\nreturn result\n}\n\n\nconsole.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // true\nconsole.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef','c'])) // true\n// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar'])) // false\n// console.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]",
+                                "[",
+                                "  [ 'ab', 'cd', 'ef' ],",
+                                "  [ 'ab', 'c', 'def' ],",
+                                "  [ 'abc', 'def' ],",
+                                "  [ 'abcd', 'ef' ]",
+                                "]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const allConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === '') return [[]]\n\n    const result = []\n    for (let word of wordBank) {\n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n          const suffixWays = allConstruct(suffix, wordBank) // we should assume this returns a 2d array\n    // where i messed up here is i didn't iterate over each item in suffixways\n    // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n          const targetWays = suffixWays.map((way) => [word, ...way])\n          // and i did have the intuition to create an array outside the for loop as well\n        result.push(...targetWays)\n        }   \n}\nmemo[target] = result\nreturn result\n}\n\n\n// console.log(allConstruct('purple', ['purp', 'p', 'ur', 'le', 'purpl'])) // [ [ 'purp', 'le' ], [ 'p', 'ur', 'p', 'le' ] ]\n// console.log(allConstruct('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef','c'])) \n// console.log(allConstruct('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))\n// console.log(allConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) \nconsole.log(allConstruct('abcdef', ['ab','abc','cd', 'def','abcd','ef', 'c']))"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[",
+                                "  [ 'ab', 'cd', 'ef' ],",
+                                "  [ 'ab', 'c', 'def' ],",
+                                "  [ 'abc', 'def' ],",
+                                "  [ 'abcd', 'ef' ]",
+                                "]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## mistakes:\n   where i messed up here is i didn't iterate over each item in suffixways\n```js\n    const targetWays = suffixWays.map((way) => [word, ...way])\n\n        // i did have the intuition to create [word, ...thing]\n    // i just needed to do it for each suffix in 2d array\n```\n\nalthough i did have the intuition to create an array outside the for loop\n\nI also didn't return a 2d array for my base case\n```js\n    if (target === '') return [[]]\n```\n\nm = target.length\nn = wordBank.length\n\n\n#### time complexity O(n^m*m) which simplifies to O(n^m)\nn^m subarrays because n^m leaves\ncan't do any better than exponential\n#### space complexity O(m) \nheight of the recursion tree\nwhen the output is very large, we don't include the size of the result into the space complexity, just the stack space (result space would be exponential)\n\n"
+            ],
+            "outputs": []
+        }
+    ]
+}

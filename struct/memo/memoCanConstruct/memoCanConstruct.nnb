@@ -1,0 +1,242 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# canConstruct\n\n<img src=\"memoCanConstructFig1.png\" width=\"600\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "\n<img src=\"memoCanConstructFig2.png\" width=\"600\" />\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig3.png\" width=\"600\" />\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### find your base cases\n\nEasier to make a shorter string than a longer string (what's the smallest problem i can solve)\n\nthe smallest string possible is an empty string => `\"\"`\n\nthis will always return true, you just take 0 elements of the array, or an empty array `[]`\n\n```js\ncanConstruct('', ['cat', 'dog', 'mouse']) => true\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig4.png\" width=\"600\" />\n\n\n### how do i know what to put as the root\nstart with the target string at the root. the array of words doesn't change, so its a safe bet to use the target\n\n### how to shrink the target string:\n we need to use the array of words, and remove from the target string, so the words are our edges\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                " <img src=\"memoCanConstructFig10.png\" width=\"600\" />\n \n ### mistakes:\n don't take out strings from the middle of the word\n\n\n\n  ### fix:\n we took a prefix from the target\n only branch the children if you have a matching prefix in the word bank"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig4.png\" width=\"600\" />\n\n#### true base case\nif you get to an empty string, you found your `valid base case` for true\n\n#### false base case\nif you have no more options, return false"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig5.png\" width=\"600\" />\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const canConstruct = (target, wordBank) => {\nif (target === '') return true\n\nfor (let word of wordBank){\n        // when is it okay to make a word from the prefix\n\n    // we have an array so iterate through every option in the array\n    // we can check if a substring is a prefix of another string\n\n    if (target.indexOf(word) === 0) {\n        // if i have a prefix we can use it to shrink the target\n        const suffix = target.slice(word.length)\n        /*\n        word = 'pot\n        target = potato\n        'potato'\n        target.indexOf(word) => 0\n        target.slice(word.length) => 'ato'\n        \n        length of prefix which in this case is 3 'p' 'o' 't'\n        so we removed the entire beginning of the target string that is the length of the prefix\n        which gives us 'ato' for our new target\n        */\n\n        // now that we shrunk the target, our new target is the suffix\n\n\n        // we want to return a boolean, think of your return value, and add a check here\n        if (canConstruct(suffix, wordBank) === true) return true\n\n    }\n    // indexOf returns first matching element in array\n    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf\n\n}\n// if iterate through every choice, no target can be made\n    return false\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('abcdef', ['ab', 'abc', 'cd','def','abcd'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('skateboard', ['bo', 'rd', 'ate','t','ska', 'sk', 'boar'])) // false"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// console.log(canConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['eeeeee', 'eeeeee', 'eeeee','eeee','e', 'ee'])) // false times out"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig6.png\" width=\"600\" />\n\n<img src=\"memoCanConstructFig8.png\" width=\"600\" />\n\n#### time complexity O(n^m * n)\n\nsingle characters will give us a really tall tree\n\nm = target.length\nn = wordbank.length\n\nbranching factor is number of words in word bank\n\neach level of tree is multiplied by n so O(n^m) `branching factor ^ height power`\n\nslicing the target string will have a maximum length of m, the length of the target so new complexity is O(n^m * m)\n\ncall tree is number of nodes, the branching factor\n\n#### space complexity O(m^2)\n\ncall stack is height of tree so O(m)\nbut we create suffix which returns a new string, which will tend to be length m so O(m^2)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig8.png\" width=\"600\" />\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const canConstruct = (target, wordBank, memo = {}) => {\n    if (target in memo) return true // memo checking logic seems to be the same in each memo fn\n    if (target === '') return true\n    \n    for (let word of wordBank){\n    \n        if (target.indexOf(word) === 0) {\n            const suffix = target.slice(word.length)\n\n            if (canConstruct(suffix, wordBank, memo) === true)  {\n            memo[target] = true\n            return true // the rule is at every return value, store the return value in the memo}\n    \n        }\n    \n    }\n}\nmemo[target] = false\n    return false\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('abcdef', ['ab', 'abc', 'cd','def','abcd'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('skateboard', ['bo', 'rd', 'ate','t','ska', 'sk', 'boar'])) // false"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('enterapotentpot', ['a', 'p', 'ent','enter','ot', 'o', 't'])) // true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canConstruct('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeef', ['eeeeee', 'eeeeee', 'eeeee','eeee','e', 'ee'])) // false times out"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### patterns:\n1. take the prefix to break the problem down\n\n```js\ncanConstruct('abcdef', ['ab', 'abc', 'cd','def','abcd'])\n\n// example word = 'ab' PREFIX\nconst suffix = target.slice(word.length) // subtracts our prefix, word is 2 letters, so slicing abcdef at 2 would cut everything before index 2 so a and b\n// suffix = cdef SUFFIX\n```\n\n\n### mistakes:\n1. i need to check memo, not memo[target]\n\n```js\nif (target in memo[target]) return true\n```\n```js\nif (target in memo) return true`\n```\n2. need to always to add memo to function call\n\n```js\nconst canConstruct = (target, wordBank, memo = {}) => {\n```\n\n3. need to always add memo in recursive fn call as well\n\n```js\nif (canConstruct(suffix, wordBank, memo) === true)  \n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img src=\"memoCanConstructFig9.png\" width=\"600\" />"
+            ],
+            "outputs": []
+        }
+    ]
+}

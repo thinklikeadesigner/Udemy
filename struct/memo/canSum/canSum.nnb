@@ -1,0 +1,224 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "### CanSum\n\n<img alt=\"canSumFig1\" src=\"canSumFig1.png\" width=\"600\" />\n\n```js\ncanSum(7, [5,3,4,7]) // => true\ncanSum(7, [2,4]) // => false\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const canSum = (target, numbers) => {\n    if (target === 0) return true\n    if (target < 0) return false\n    for (let num of numbers) {\n        const remainder = target - num\n        if (canSum(remainder, numbers) === true) {\n            return true\n        }\n    }\n   return false\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(7, [2,3])) // => true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(7, [5,3,4,7])) // => true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(7, [2,4])) // => false"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(8, [2,3,5])) // => true"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// input too large\n// console.log(canSum(300, [7,14])) "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "<img alt=\"canSumFig2\" src=\"canSumFig2.png\" width=\"600\" />"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "the base of the exponent depends on the max number of branches at each node\nin this case, its the length of the numbers array\n\nthe exponent is the depth or height of the tree, m"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const canSum = (target, numbers, memo = {}) => {\n    if (target in memo) return memo[target]\n    if (target === 0) return true\n    if (target < 0) return false\n\n\n\n    for (let num of numbers) {\n        const remainder = target - num\n        if (canSum(remainder, numbers, memo) === true) {\n            memo[target] = true\n            return memo[target]\n        }\n    }\n    // originally i forgot to add this return in the memo\n    memo[target] = false\n   return memo[target]\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(7, [2,3])) // => true\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(7, [5,3,4,7])) // => true\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(7, [2,4])) // => false\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(8, [2,3,5])) // => true\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(canSum(300, [7,14])) // => false\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### caveats\n- make sure to include allll return values that arent base case return values in memo.\n- if argument doesn't change, like the numbers array in canSum, you don't need to include it in the key\n- to memoize, make sure you look at a big enough sample problem so you can see the duplicate problems\n\n\n<img alt=\"canSumFig3\" src=\"canSumFig3.png\" width=\"600\" />\n\n\nm space which is the depth of the tree, which is the same for brute force and memoized versions"
+            ],
+            "outputs": []
+        }
+    ]
+}

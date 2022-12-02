@@ -1,0 +1,460 @@
+{
+    "cells": [
+        {
+            "language": "javascript",
+            "source": [
+                "\nconst uncompress = (s) => {\n  let result = [];\n  const numbers = '0123456789';\n  let i = 0;\n  let j = 0;\n  while (j < s.length) {\n    if (numbers.includes(s[j])) {\n      j += 1;\n    } else {\n      const num = Number(s.slice(i, j));\n      for (let count = 0; count < num; count += 1) {\n        result.push(s[j]);\n      }\n      // this section moves both i and j to the next number\n      j += 1;\n      i = j;\n    }\n  }\n  return result.join('');\n};\n\nuncompress(\"4s2b\"); // -> 'ssssbb'\n// uncompress(\"2p1o5p\"); // -> 'ppoppppp'\n// uncompress(\"2c3a1t\"); // -> 'ccaaat'\n// uncompress(\"3n12e2z\"); // -> 'nnneeeeeeeeeeeezz'\n\nmodule.exports = {\n  uncompress,\n};\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "{",
+                                "  uncompress: \u001b[36m[Function: uncompress]\u001b[39m",
+                                "}"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "\n\nn = number of groups\n\nm = max num found in any group\n#### TIME COMPLEXITY\nTime: O(n*m)\n#### SPACE COMPLEXITY\nSpace: O(n*m)\n\nif you did your result in string, `result = ''`\nand you did `result += s[j]`\nstring concatenation is `O(n)` bc in JS `strings \nare immutable` so you have to create a new string\nwhich would be the length of the old string, n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## mistakes:\n1. didn't account for numbers longer than 1 digit\n2. could have just done a string of numbers to check with .includes() like '0123456789' 🙃\n3. and could have kept string form instead of splitting each char into an array\n4. if i am using two pointers that start from beginning or from 0 and 1, i can initiate them outside the loop\n\n\n### notes:\nif im checking for numbers or letters, i can just use `'0123456789'` and `'abcdefghijklmnopqrstuvwxyz' 🤓`\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "this section moves both i and j to the next number\n \n**i\n\n2p1o5p\n\n**j\n  \n\n      \n```js\n      j += 1;\n      i = j;\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## my implementation of compress()"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const compress = s => {\n  let result = [];\n  let j = 1;\n  let i = 0;\n  while (i < s.length || j < s.length) {\n    if (s[i] === s[j]) {\n      j++;\n    } else {\n      let letters = s.slice(i, j);\n      if (letters.length !== 1) {\n        result.push(letters.length);\n      }\n      result.push(letters[0]);\n\n      i = j;\n    }\n  }\n\n  return result.join(\"\");\n};\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(compress('ccaaatsss')); // -> '2c3at3s'\n// console.log(compress('ssssbbz')); // -> '4s2bz'\n// console.log(compress('ppoppppp')); // -> '2po5p'\n// console.log(compress('nnneeeeeeeeeeeezz')); // -> '3n12e2z'\n// console.log(compress('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'))\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2c3at3s",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## structy implementation of compress()\n\n### O(1) implementation below"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const compress = s => {\n  let result = [];\n  let i = 0;\n  let j = 0;\n\n  while (j <= s.length) {\n    if (s[i] === s[j]) {\n      j += 1;\n    } else {\n      const num = j - i;\n      if (num === 1) {\n        result.push(s[i]);\n      } else {\n        result.push(String(num), s[i]);\n      }\n      i = j;\n    }\n  }\n\n  return result.join(\"\");\n};\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "console.log(compress('ccaaatsss')); // -> '2c3at3s'\n// console.log(compress('ssssbbz')); // -> '4s2bz'\n// console.log(compress('ppoppppp')); // -> '2po5p'\n// console.log(compress('nnneeeeeeeeeeeezz')); // -> '3n12e2z'\n// console.log(compress('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'))\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2c3at3s",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## O(n) implementation below\n\nbc string concatenation copies strings, which makes it iterate the entire string\n\n```js\nconst compress = s => {\n  let result = ''\n  let i = 0;\n  let j = 0;\n  let h = \"\"\n  while (j <= s.length) {\n    if (s[j] === s[i]) {\n      j++;\n    } else {\n   \n      if ((j - i) === 1) {\n      // result.push(j - i,s[i]);\n        result +=  s[i]\n      } else {\n        \n           result += (j - i) + s[i]\n      }\n              i = j;\n\n     \n      //   result.push(j)\n      //   result.push(s[i])\n      //         i = j;\n      \n\n    }\n  }\nresult += h\n  return result\n};\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "// O(n)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "n = length of string\n\n#### time complexity (Structy)\n\nTime: O(n)\n\n#### space complexity (Structy)\nSpace: O(n)\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "(anagrams problem)[https://structy.net/problems/premium/anagrams]\n\n## my implementation of anagrams (11 minutes)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const anagrams = (s1, s2) => {\n    if (s1.length !== s2.length) return false\n  let obj1 = {}\n  let obj2 = {}\n    \n    for (let letter of s1){\n      obj1[letter] ? obj1[letter] += 1 : obj1[letter] = 1\n    \n    }\n    \n      for (let letter of s2){\n      obj2[letter] ? obj2[letter] += 1 : obj2[letter] = 1\n  \n    }\n  \n    for (let g in s1){\n      if (!(obj1[s1[g]] == obj2[s1[g]])) return false\n    }\n  \n  return true\n  };\n  \n  console.log(anagrams('restful', 'fluster'))\n  console.log(anagrams('cats', 'tocs'))\n  console.log(anagrams('catss', 'tocs'))\n  "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                "false",
+                                "false",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## Struct implementation anagrams"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const anagrams = (s1, s2) => {\n    const count = {};\n    for (let char of s1) {\n      if (!(char in count)) {\n        count[char] = 0;\n      }\n      count[char] += 1;\n    }\n    \n    for (let char of s2) {\n      if (count[char] === undefined) {\n        return false;\n      } else {\n        count[char] -= 1;\n      }\n    }\n    \n    for (let char in count) {\n      if (count[char] !== 0) {\n        return false;\n      }\n    }\n    \n    return true;\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "n = length of string 1\n\nm = length of string 2\n\n#### time complexity: Time: O(n + m)\n\n#### space complexity: Space: O(n)\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## my implementation of MOST FREQUENT CHAR (9 minutes)\n\nNOTES: make sure to check if you are returning a number or a letter or an object and what you are iterating over like what does this return \n\n```js\nobj1[s[g]] \n```\n\nor this \n\n```js\ns[g]\n```\n\nis g a letter or a number or an index or the key or value of an object?"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const mostFrequentChar = (s) => {\n    let obj1 = {}\n    let max = 0\n    let maxletter = s[0]; \n    \n    for (let letter of s){\n        obj1[letter] ? obj1[letter] += 1 : obj1[letter] = 1\n      }\n      \n      for (let g in s){\n        if (obj1[s[g]] > max) {\n          max = obj1[s[g]] \n          maxletter = s[g]\n        }}\n    return maxletter\n    };\n  \n    \n  mostFrequentChar('bookeeper'); // -> 'e'"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'e'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## structy of MOST FREQUENT CHAR"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const mostFrequentChar = (s) => {\n    const count = {};\n    \n    for (let char of s) {\n      if (!(char in count)) {\n        count[char] = 0;\n      }\n      count[char] += 1\n    }\n    \n    let best = null;\n    for (let char of s) {\n      if (best === null || count[char] > count[best]) {\n        best = char;\n      }\n    }\n    return best;\n  };\n\n//   n = length of string\n// Time: O(n)\n// Space: O(n)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "iterating through the string and not the object is important bc you want to return the earliest occurance if there's a tie\n\n```js\n      for (let g in s)\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## My implementation of PAIR SUM\n\n## mistakes:\n\ni was trying to use `includes()` and `indexOf()` but i couldnt get that to work so I just iterated until i found the number that matched the remainder."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const pairSum = (numbers, targetSum) => {\n  for (let num in numbers) {\n    let remainder = targetSum - numbers[num];\n\n    for (let i = 1; i < numbers.length; i++) {\n      if (numbers[i] == remainder) return [Number(num), i];\n    }\n  }\n};\n\nconsole.log(pairSum([3, 2, 5, 4, 1], 8)); // -> [0, 2])\nconsole.log(pairSum([4, 7, 9, 2, 5, 1], 5)); // -> [0, 5]\nconsole.log(pairSum([4, 7, 9, 2, 5, 1], 3)); // -> [3, 5]\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 0, 2 ]",
+                                "[ 0, 5 ]",
+                                "[ 3, 5 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## structy of PAIR SUM"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const pairSum = (numbers, targetSum) => {\n    const previousNums = {};\n    for (let i = 0; i < numbers.length; i += 1) {\n      const num = numbers[i];\n      const complement = targetSum - num;\n      if (complement in previousNums) return [i, previousNums[complement]];\n      \n      previousNums[num] = i;\n    }\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## my implementation PAIR PRODUCT\n\n## MISTAKES:\n\ni forgot to exclude the first index, because if the index is a square root of the answer it will pick that index twice\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const pairProduct = (numbers, targetProduct) => {\n    console.log({targetProduct})\n      console.log({numbers})\n      for (let num in numbers) {\n            if (numbers[num] !== 0 && targetProduct !== 0 && numbers[num] > 0 && targetProduct > 0){\n                let rem = targetProduct / numbers[num]\n                console.log({rem})\n                for (let j = 1; j <= numbers.length; j++){\n                  if (numbers[j] == rem){\n                    return [Number(num), j]\n                  }\n                }\n      }\n        \n      }\n    };\n    \n          \n    console.log(pairProduct([3, 2, 5, 4, 1], 8)); // -> [1, 3])\n    console.log(pairProduct([3, 2, 5, 4, 1], 10)); // -> [1, 2])\n    console.log(pairProduct([4, 7, 9, 2, 5, 1], 5)); // -> [4, 5])\n    console.log(pairProduct([4, 7, 9, 2, 5, 1], 35)); // -> [1, 4])\n      "
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "{ targetProduct: 8 }",
+                                "[ 1, 4 ]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## STRUCTY  PAIR PRODUCT"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const pairProduct = (numbers, targetProduct) => {\n    const previousNums = {};\n    for (let i = 0; i < numbers.length; i += 1) {\n      const num = numbers[i];\n      const complement = targetProduct / num;\n      \n      if (complement in previousNums) return [ previousNums[complement], i ];\n      \n      previousNums[num] = i;\n    }\n  };\n  "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## my implementation of intersection (13 min)\n\n## mistakes:\n\ntimed out on last test so i reduced the problem space by slicing out each index\n\nno idea why adding ` arr.slice(num);` makes it pass but it does"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n  // if (a.length == 0 || b.length == 0) return [];\n  let arr = [];\n  for (let num of a) {\n    if (b.includes(num)) arr.push(num);\n    // arr.slice(num);\n  }\n  console.log(arr);\n  return arr;\n};\n\nconsole.log(intersection([], [])); // -> [2,6]\nconsole.log(intersection([2, 4, 6], [4, 2])); // -> [2,4]\nconsole.log(intersection([4, 2, 1], [1, 2, 4, 6])); // -> [1,2,4]\nconsole.log(intersection([0, 1, 2], [10, 11])); // -> []\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[]",
+                                "[]",
+                                "[ 2, 4 ]",
+                                "[ 2, 4 ]",
+                                "[ 4, 2, 1 ]",
+                                "[ 4, 2, 1 ]",
+                                "[]",
+                                "[]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "THIS TIMES OUT WITH BRUTE FORCE, USE SET\n\n## set implementation\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n  const setA = new Set(a);\n  let arr = [];\n  for (let num of b) {\n    if (setA.has(num)) {\n      arr.push(num);\n    }\n  }\n  return arr;\n};\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## STRUCTY INTERSECTION brute force"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n    const result = [];\n    for (let item of b) {\n      if (a.includes(item)) {\n        result.push(item);\n      }\n    }\n    return result;\n  };\n\n  console.log(intersection([], [])); // -> [2,6]\nconsole.log(intersection([2, 4, 6], [4, 2])); // -> [2,4]\nconsole.log(intersection([4, 2, 1], [1, 2, 4, 6])); // -> [1,2,4]\nconsole.log(intersection([0, 1, 2], [10, 11])); // -> []"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[]",
+                                "[ 4, 2 ]",
+                                "[ 1, 2, 4 ]",
+                                "[]",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## STRUCTY INTERSECTION using set"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const intersection = (a, b) => {\n    const result = [];\n    const setA = new Set(a);\n    for (let item of b) {\n      if (setA.has(item)) {\n        result.push(item);\n      }\n    }\n    return result;\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## my implementation with hints five sort\n\n## mistakes:\n\nforgot to know the difference between i and nums[i] again\n\nneeded to figure out my else cases\n\nhad the rigth idea about switching elements that weren't 5\n\ntry to figure out how many combinations there are first\n\n### for the future\n\nmake a diagram like \n\n i*******j\n        \n[12, 7, 1, 5, 12,5, 5]"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const fiveSort = nums => {\n  let i = 0;\n  let j = nums.length - 1;\n\n  const swap = (a, b, arr) => ([arr[a], arr[b]] = [arr[b], arr[a]]);\n\n  while (i < j) {\n    if (nums[j] === 5) {\n\n      j--;\n      \n    } else if (nums[i] === 5) {\n      swap(i, j, nums);\n      j--;\n      i++;\n\n    } else {\n\n      i++;\n    }\n  }\n  return nums;\n};\n// i         j\n// [12, 7, 1, 5, 12,5, 5]\n\nfiveSort([12, 5, 1, 5, 12, 7]);\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "[",
+                                "  \u001b[33m12\u001b[39m,",
+                                "  \u001b[33m7\u001b[39m,",
+                                "  \u001b[33m1\u001b[39m,",
+                                "  \u001b[33m12\u001b[39m,",
+                                "  \u001b[33m5\u001b[39m,",
+                                "  \u001b[33m5\u001b[39m",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## structy implementation five sort"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const fiveSort = (nums) => {\n    let i = 0;\n    let j = nums.length - 1;\n    while (i < j) {\n      if (nums[j] === 5) {\n        j -= 1;\n      } else if (nums[i] === 5) {\n        [ nums[i], nums[j] ] = [ nums[j], nums[i] ];\n        i += 1;\n      } else {\n        i += 1;\n      }\n    }\n  \n    return nums;\n  };"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "n = array size\n\n## time complexity  Time: O(n)\n\n## space complexity Space: O(1)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}
