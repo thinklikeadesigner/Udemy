@@ -731,6 +731,103 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# BOTTOM RIGHT VALUE binary tree\n\nall i had to do was reach the bottom in the correct order, by pushing the right node onto the queue before the left one"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Node {\n  constructor(val) {\n    this.val = val;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nconst bottomRightValue = (root) => {\n  if (root === null) return 0\n    let queue = [root]\n    let val = null\n    while (queue.length > 0){\n      let node = queue.shift()\n      val = node.val\n      if (node.left) queue.push(node.left)\n      if (node.right) queue.push(node.right)\n    }\n    return val\n    };\n    \nconst a = new Node(3);\nconst b = new Node(11);\nconst c = new Node(10);\nconst d = new Node(4);\nconst e = new Node(-2);\nconst f = new Node(1);\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\n\n//       3\n//    /    \\\n//   11     10\n//  / \\      \\\n// 4   -2     1\n\nbottomRightValue(a); // -> 1\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m1\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(-1);\nconst b = new Node(-6);\nconst c = new Node(-5);\nconst d = new Node(-3);\nconst e = new Node(-4);\nconst f = new Node(-13);\nconst g = new Node(-2);\nconst h = new Node(6);\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\ne.right = h;\n\n//        -1\n//      /   \\\n//    -6    -5\n//   /  \\     \\\n// -3   -4   -13\n//     / \\       \n//    -2  6\n\nbottomRightValue(a); // -> 6\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m6\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(-1);\nconst b = new Node(-6);\nconst c = new Node(-5);\nconst d = new Node(-3);\nconst e = new Node(-4);\nconst f = new Node(-13);\nconst g = new Node(-2);\nconst h = new Node(6);\nconst i = new Node(7);\n\n\na.left = b;\na.right = c;\nb.left = d;\nb.right = e;\nc.right = f;\ne.left = g;\ne.right = h;\nf.left = i;\n\n//        -1\n//      /   \\\n//    -6    -5\n//   /  \\     \\\n// -3   -4   -13\n//     / \\    /   \n//    -2  6  7 \n\nbottomRightValue(a); // -> 7"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m7\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node('a');\nconst b = new Node('b');\nconst c = new Node('c');\nconst d = new Node('d');\nconst e = new Node('e');\nconst f = new Node('f');\n\na.left = b;\na.right = c;\nb.right = d;\nd.left = e;\ne.right = f;\n\n//      a\n//    /   \\ \n//   b     c\n//    \\\n//     d\n//    /\n//   e\n//  /\n// f\n          \nbottomRightValue(a); // -> 'f'"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[32m'f'\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const a = new Node(42);\n\n//      42\n\nbottomRightValue(a); // -> 42"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "\u001b[33m42\u001b[39m"
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
