@@ -981,14 +981,28 @@
         {
             "language": "javascript",
             "source": [
-                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n  const treeLevels = (root) => {\nif (root === null) return []\nconst levels = []\nconst stack = [{node: root, levelNum: 0}]\n\nwhile (stack.length > 0){\n  const {node, levelNum} = stack.shift()\n  if (levels.length === levelNum){\n    levels.push([node.val])\n  } else {\n    levels[levelNum].push(node.val)\n  }\n  if (node.left) stack.push({node: node.left, levelNum: levelNum + 1})\n\n  if (node.right) stack.push({node: node.right, levelNum: levelNum + 1})\n\n}\n\nreturn levels\n        \n      }\n      \n"
+                "class Node {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n  const treeLevels = (root) => {\nif (root === null) return []\nconst levels = []\nconst stack = [{node: root, levelNum: 0}]\n\nwhile (stack.length > 0){\n  const {node, levelNum} = stack.shift()\n  if (levels.length === levelNum){\n    levels.push([node.val])\n  } else {\n    levels[levelNum].push(node.val)\n  }\n  if (node.left) stack.push({node: node.left, levelNum: levelNum + 1})\n\n  if (node.right) stack.push({node: node.right, levelNum: levelNum + 1})\n\n}\n\nreturn levels\n        \n      }\n\n      let set = new Set( [ \"john\", \"mark\"])\n      set.add(\"hello\")\n \n      for (let x of set){ // DOESNT WORK\n        console.log(set.has(x))\n       } \n      "
             ],
-            "outputs": []
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "true",
+                                "true",
+                                "true",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
             "language": "markdown",
             "source": [
-                "## set\n\nadding to set\n\n```javascript\n     let set = new Set( [ \"john\", \"mark\"])\n      set.add(\"hello\")\n \n      for (let x in set){ // DOESNT WORK\n        console.log(set.has(x))\n       }  \n```\n\n```javascript\nlet set = new Set( [ \"john\", \"mark\"])\nfor (let x of set){\n  console.log(x)\n } \n```\n\njohn\nmark\n\n```javascript\nfor (let x in set){ // DOESNT WORK\n  console.log(x)\n } \n```"
+                "## set\n\nadding to set\n\n```javascript\n      let set = new Set( [ \"john\", \"mark\"])\n      set.add(\"hello\")\n \n      for (let x of set){ \n        console.log(set.has(x))\n       } \n```\n\n```javascript\nlet set = new Set( [ \"john\", \"mark\"])\nfor (let x of set){\n  console.log(x)\n } \n```\n\njohn\nmark\n\n```javascript\nfor (let x in set){ // DOESNT WORK\n  console.log(x)\n } \n```"
             ],
             "outputs": []
         },
