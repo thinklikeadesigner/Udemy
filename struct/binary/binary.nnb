@@ -3,7 +3,7 @@
         {
             "language": "markdown",
             "source": [
-                "# DEPTH FIRST VALUES binary tree\n\nmistakes:\n1. forgetting to pass in all arguments to recursive function\n2. forgetting to check for `stack.length > 0`, not just `stack > 0`\n3. wrong order of recursive calls (left before right) will fail tests\n4. make sure your return value is the right one\n5. \n"
+                "# DEPTH FIRST VALUES binary tree\n\nmistakes:\n1. forgetting to pass in all arguments to recursive function\n2. forgetting to check for `stack.length > 0`, not just `stack > 0`\n3. wrong order of recursive calls (left before right) will fail tests\n4. make sure your return value is the right one\n5. returned () instead of []\n"
             ],
             "outputs": []
         },
