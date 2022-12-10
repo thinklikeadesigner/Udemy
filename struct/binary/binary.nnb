@@ -17,7 +17,7 @@
         {
             "language": "javascript",
             "source": [
-                "/*\nITERATIVE\n*/\n// const depthFirstValues = (root) => {\n// if (root === null) return []\n// const result = []\n// const stack = [root]\n\n// while (stack.length > 0){\n// let node = stack.pop()\n// result.push(node.val)\n\n// if (node.left) stack.push(node.left)\n// if (node.right) stack.push(node.right)\n\n// }\n\n// return result\n// }\n\n/*\nRECURSIVE\n*/\nconst depthFirstValues = (root) => {\nif (root === null) return []\n\nlet left = depthFirstValues(root.left)\nlet right = depthFirstValues(root.right)\n\nreturn [root.val, ...left, ...right]\n\n}\n\n// const depthFirstValues = (root) => {\n//     if (root === null) return []\n//     return [root.val, ...depthFirstValues(root.left), ...depthFirstValues(root.right)]\n//     }\n"
+                "/*\nITERATIVE\n*/\n// const depthFirstValues = (root) => {\n// if (root === null) return []\n// const result = []\n// const stack = [root]\n\n// while (stack.length > 0){\n// let node = stack.pop()\n// result.push(node.val)\n\n// if (node.left) stack.push(node.left)\n// if (node.right) stack.push(node.right)\n\n// }\n\n// return result\n// }\n\n/*\nRECURSIVE\n*/\nconst depthFirstValues = (root) => {\nif (root === null) return []\n\nlet left = depthFirstValues(root.left)\nlet right = depthFirstValues(root.right)\n\nreturn [root.val, ...right, ...left]\n\n}\n\n// const depthFirstValues = (root) => {\n//     if (root === null) return []\n//     return [root.val, ...depthFirstValues(root.left), ...depthFirstValues(root.right)]\n//     }\n"
             ],
             "outputs": []
         },
@@ -34,17 +34,24 @@
                             "value": [
                                 "[",
                                 "  \u001b[32m'a'\u001b[39m,",
-                                "  \u001b[32m'b'\u001b[39m,",
-                                "  \u001b[32m'd'\u001b[39m,",
-                                "  \u001b[32m'e'\u001b[39m,",
                                 "  \u001b[32m'c'\u001b[39m,",
-                                "  \u001b[32m'f'\u001b[39m",
+                                "  \u001b[32m'f'\u001b[39m,",
+                                "  \u001b[32m'b'\u001b[39m,",
+                                "  \u001b[32m'e'\u001b[39m,",
+                                "  \u001b[32m'd'\u001b[39m",
                                 "]"
                             ]
                         }
                     ]
                 }
             ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                ""
+            ],
+            "outputs": []
         },
         {
             "language": "javascript",
@@ -59,12 +66,12 @@
                             "value": [
                                 "[",
                                 "  \u001b[32m'a'\u001b[39m,",
+                                "  \u001b[32m'c'\u001b[39m,",
+                                "  \u001b[32m'f'\u001b[39m,",
                                 "  \u001b[32m'b'\u001b[39m,",
-                                "  \u001b[32m'd'\u001b[39m,",
                                 "  \u001b[32m'e'\u001b[39m,",
                                 "  \u001b[32m'g'\u001b[39m,",
-                                "  \u001b[32m'c'\u001b[39m,",
-                                "  \u001b[32m'f'\u001b[39m",
+                                "  \u001b[32m'd'\u001b[39m",
                                 "]"
                             ]
                         }
@@ -133,6 +140,13 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function fillPrefixSum(arr, n, prefixSum)\n{\n    prefixSum[0] = arr[0];\n\n    // Adding present element\n    // with previous element\n    for (let i = 1; i < n; ++i)\n        prefixSum[i] = prefixSum[i - 1] + arr[i];\n}\n \nlet arr = [ 10, 4, 16, 20 ];\nlet n = arr.length;\nlet prefixSum = new Array(n);\n\nfillPrefixSum([10, 20, 10, 5, 15], 5, prefixSum);"
+            ],
+            "outputs": []
         },
         {
             "language": "markdown",
