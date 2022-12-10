@@ -1164,7 +1164,7 @@
         {
             "language": "markdown",
             "source": [
-                "# PAthFinder\n\nmistakes: didnt check if left recursive or right recursive call was null before returning ```[root.val, ...left]``` or  ```[root.val, ...right]```\n\n`// test_06 [PASS] 512ms ` is really slow because using `...left` etc which copies the array over. use unshift instead. push reverses the order\n\n"
+                "# PAthFinder\n\nmistakes: \n1. didnt check if left recursive or right recursive call was null before returning ```[root.val, ...left]``` or  ```[root.val, ...right]```\n\nExplanation: \n1. if a path is null, that means the recursive call reached the bottom, and we don't need to record the path going back up the tree\n\n`// test_06 [PASS] 512ms ` is really slow because using `...left` etc which copies the array over. use unshift instead. push reverses the order\n\nExplanation:\n\n\n"
             ],
             "outputs": []
         },
