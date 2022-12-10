@@ -6,6 +6,62 @@
                 "concat number with string turns num to string\n\nin js at out of bound index, you get undefined which you can use to compare like s[i] !== (out of bound index aka undefined)\n\nconcatenating a string creates a new string which is O(n) time \n\n\n\n\nfor...in\n========\n\nThe `for...in` statement iterates over all [enumerable string properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties) of an object (ignoring properties keyed by [symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)), including inherited enumerable properties.\n\nif you do an of loop, you iterate through an iterable object. this gets the values, not the index \n\ntype OBJECT is not iterable so have to convert to array or other type\n\n# this returns the keys of the object, for arrays it returns the index but as a string. this will mess things up\n\nIt is better to use a for loop with a numeric index, Array.prototype.forEach(), or the for...of loop, because they will return the index as a number instead of a string, and also avoid non-index properties.\n\n\n\n\n<a id=’for-of’></a>\n\n### For ... of\n\n========\n\nThe `for...of` statement executes a loop that operates on a sequence of values sourced from an [iterable object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol). Iterable objects include instances of built-ins such as [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [`TypedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray), [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set), [`NodeList`](https://developer.mozilla.org/en-US/docs/Web/API/NodeList) (and other DOM collections), as well as the [`arguments`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments) object, [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) produced by [generator functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*), and user-defined iterables.\n"
             ],
             "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# string"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "\n```javascript\nlet string = \"helloooo\"\n```\n\n```javascript\nfor (let x in string){\n console.log(x)\n} \n```\n\n0\n7\n\n```js\nfor (let x of string){\n console.log(string[x])\n} \n```\nh\ne\nl\nl\no\no\no\no"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# array"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "\n```javascript\nlet arr = [ \"john\", \"mark\"]\n```\n\n```javascript\nfor (let x in arr){\n console.log(x)\n} \n```\n\n0\n1\n\n```javascript\nfor (let x of arr){\n console.log(x)\n} \n```\n\n\njohn\nmark"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# object"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "```javascript\nlet person = {fname: \"john\", lname: \"mark\", fullname: \"john mark\"}\n```\n\n\n\n\n```javascript\nfor (let x in person){\n console.log(x)\n} \n```\n\nfname\nfullname\n\n```javascript\nfor (let x of person){ // DOESNT WORK\n  console.log(x)\n } \n```\n\n### but you CAN do\n\n```javascript\nfor (let x in person){ // DOESNT WORK\n    console.log(person[x])\n   } \n```\njohn\nmark\njohn mark"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## set"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "\nadding to set\n\n```javascript\n      let set = new Set( [ \"john\", \"mark\"])\n      set.add(\"hello\")\n \n      for (let x of set){ \n        console.log(set.has(x))\n       } \n```\n\n```javascript\nlet set = new Set( [ \"john\", \"mark\"])\nfor (let x of set){\n  console.log(x)\n } \n```\n\njohn\nmark\n\n```javascript\nfor (let x in set){ // DOESNT WORK\n  console.log(x)\n } \n```"
+            ],
+            "outputs": []
         }
     ]
 }
