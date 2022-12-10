@@ -151,7 +151,7 @@
         {
             "language": "markdown",
             "source": [
-                "# BREATH FIRST VALUES binary tree"
+                "# BREATH FIRST VALUES binary tree\n\nmistakes:\n1. used for loop instead of while loop for `while (queue.length > 0)`\n2. didn't add `node.val` to values array, added just `node`"
             ],
             "outputs": []
         },
@@ -255,7 +255,7 @@
         {
             "language": "markdown",
             "source": [
-                "# TREE SUM binary tree"
+                "# TREE SUM binary tree\nmistakes:\n1. forgot edge case for null root"
             ],
             "outputs": []
         },
@@ -323,7 +323,7 @@
         {
             "language": "markdown",
             "source": [
-                "# TREE INCLUDES binary tree\n\nbase cases:\n\n**always lead with base cases that evaluate to null**\n\n- affirmative base case, we found our value\n- negative base case, we didn't find our value so we've reached a null node \n\nLOGICAL OR\n\n- false and false => true\n- true and false => true\n- false and true => true\n"
+                "# TREE INCLUDES binary tree\n\nmistakes:\n1. looked to see if the value was true instead of if the value matched the target \n   1. `  if (root.val === true) return true` instead of `if (root.val === target) return true`\n\nbase cases:\n\n**always lead with base cases that evaluate to null**\n\n- affirmative base case, we found our value\n- negative base case, we didn't find our value so we've reached a null node \n\nLOGICAL OR\n\n- false and false => true\n- true and false => true\n- false and true => true\n"
             ],
             "outputs": []
         },
@@ -532,7 +532,7 @@
         {
             "language": "markdown",
             "source": [
-                "# MAX ROOT TO LEAF PATH"
+                "# MAX ROOT TO LEAF PATH\nmistakes:\n1. for **is a leaf** base case, checked if it had left OR right children instead of left AND right children. so the search of max sum ended early"
             ],
             "outputs": []
         },
@@ -1160,6 +1160,27 @@
                     ]
                 }
             ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# PAthFinder\n\nmistakes: didnt check if left recursive or right recursive call was null before returning ```[root.val, ...left]``` or  ```[root.val, ...right]```\n\n`// test_06 [PASS] 512ms ` is really slow because using `...left` etc which copies the array over. use unshift instead. push reverses the order\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "\nconst pathFinder = (root, target) => {\n    // return type => array\n    // # of params => 2\n    // root: root node of binary tree\n    // target: where we are trying to go, path we are trying to record\n    // base cases: \n    // target not in tree return null\n    // current val is target, return current val in an array\n    \n    if (root === null) return null\n    if (root.val === target) return [root.val]\n    \n    \n    let left = pathFinder(root.left, target)\n    let right = pathFinder(root.right, target)\n    \n    if (left) return [root.val, ...left]\n    if (right) return [root.val, ...right]\n    \n    return null\n  \n  }\n\n//   test_00 [PASS] 80ms \n//   test_01 [PASS] 77ms \n//   test_02 [PASS] 82ms \n//   test_03 [PASS] 86ms \n//   test_04 [PASS] 82ms \n//   test_05 [PASS] 82ms \n//   test_06 [PASS] 81ms  // waaaaay faster"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const fastPathFinder = (root, target) => {\n    if (root === null) return null\n    if (root.val === target) return [root.val]\n    \n    \n    let left = pathFinder(root.left, target)\n    let right = pathFinder(root.right, target)\n    \n    if (left){\n      left.unshift(root.val)\n      return left\n    }\n    if (right){\n      right.unshift(root.val)\n      return right\n    }\n    \n    return null\n}\n\n//   test_00 [PASS] 80ms \n//   test_01 [PASS] 77ms \n//   test_02 [PASS] 82ms \n//   test_03 [PASS] 86ms \n//   test_04 [PASS] 82ms \n//   test_05 [PASS] 82ms \n//   test_06 [PASS] 81ms  // waaaaay faster"
+            ],
+            "outputs": []
         }
     ]
 }
